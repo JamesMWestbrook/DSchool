@@ -27,17 +27,15 @@ public class DoorInteract : Interactable
     {
         
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("Collission");
-    }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Triggerenter");
         Actor actor = other.gameObject.GetComponent<Actor>();
-        if (actor)
+        if (actor && !door.Open)
         {
+            door.side = side;
             actor.OpenDoor(door);
+
         }
+        
     }
 }
