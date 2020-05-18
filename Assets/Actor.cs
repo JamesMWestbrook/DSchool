@@ -8,6 +8,9 @@ public class Actor : MonoBehaviour
     public bool AI = true;
     private Animator animator;
     private NavMeshAgent agent;
+
+
+    public List<GameObject> Interactables;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +26,9 @@ public class Actor : MonoBehaviour
             animator.SetBool("Moving", false);
         }
     }
+
+
+
     public void OpenDoor(Door door)
     {
         if (AI)
@@ -51,6 +57,12 @@ public class Actor : MonoBehaviour
         yield return new WaitForSeconds(2);
         agent.isStopped = false;
         animator.SetBool("Moving", true);
+    }
+
+
+    public void UpdateInteractables()
+    {
+
     }
 
 }

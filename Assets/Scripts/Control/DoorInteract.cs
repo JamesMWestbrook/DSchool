@@ -29,11 +29,15 @@ public class DoorInteract : Interactable
     }
     private void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
         Actor actor = other.gameObject.GetComponent<Actor>();
         if (actor && !door.Open)
         {
-            door.side = side;
-            actor.OpenDoor(door);
+            if (actor.AI)
+            {
+                door.side = side;
+                actor.OpenDoor(door);
+            }
 
         }
         
