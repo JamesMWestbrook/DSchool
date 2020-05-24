@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class DoorInteract : Interactable
 {
+    public DoorInteract()
+    {
+        InteractText = "Open";
+    }
     public enum Side
     {
         Front,
@@ -14,20 +18,9 @@ public class DoorInteract : Interactable
     public override void InteractFunction()
     {
         base.InteractFunction();
-
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    private void OnTriggerEnter(Collider other)
+    
+    override public void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
         Actor actor = other.gameObject.GetComponent<Actor>();
@@ -38,8 +31,6 @@ public class DoorInteract : Interactable
                 door.side = side;
                 actor.OpenDoor(door);
             }
-
         }
-        
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,8 +10,10 @@ public class Actor : MonoBehaviour
     private Animator animator;
     private NavMeshAgent agent;
 
+    public TextMeshProUGUI InteractText;
 
-    public List<GameObject> Interactables;
+    public List<Interactable> Interactables;
+    private int CurrentInteractable;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,10 +24,14 @@ public class Actor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(agent.remainingDistance < 1)
+        if (AI)
         {
-            animator.SetBool("Moving", false);
+            if (agent.remainingDistance < 1)
+            {
+                animator.SetBool("Moving", false);
+            }
         }
+        
     }
 
 
@@ -58,11 +65,16 @@ public class Actor : MonoBehaviour
         agent.isStopped = false;
         animator.SetBool("Moving", true);
     }
-
-
     public void UpdateInteractables()
     {
+        if(Interactables.Count > 0)
+        {
+            InteractText.text = Interactables[0].InteractText;
+        }
+        else
+        {
+            InteractText.text = "";
+        }
 
     }
-
 }

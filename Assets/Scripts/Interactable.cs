@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Interactable :MonoBehaviour
 {
-
+    [HideInInspector] public string InteractText = "Interact With Me";
     public virtual void InteractFunction()
     {
 
@@ -20,19 +20,19 @@ public class Interactable :MonoBehaviour
         {
             if (!actor.AI)
             {
-                actor.Interactables.Add(gameObject);
+                actor.Interactables.Add(this);
                 actor.UpdateInteractables();
             }
         }
     }
     public virtual void OnTriggerExit(Collider other)
     {
-        Actor actor = GetComponent<Actor>();
+        Actor actor = other.GetComponent<Actor>();
         if (actor)
         {
             if (!actor.AI)
             {
-                actor.Interactables.Remove(gameObject);
+                actor.Interactables.Remove(this);
                 actor.UpdateInteractables();
             }
         }
