@@ -37,58 +37,87 @@ public class PlayerController : MonoBehaviour
     public bool Running;
     public bool Sprinting;
 
-    private void SetMovement(int i)
-    {
-        switch (i)
-        {
-            case (0):
-                Moving = false;
-                Running = false;
-                Sprinting = false;
-                break;
-            case (1):
-                Moving = true;
-                Running = false;
-                Sprinting = false;
-                break;
-            case (2):
-                Moving = false;
-                Running = true;
-                Sprinting = false;
-                break;
-            case (3):
-                Moving = false;
-                Running = false;
-                Sprinting = true;
-                break;
-        }
 
+    //USE AN ENUM NEXT TIME YOU OPEN THIS DOCUMENT
+    MovementState movementState;
+public enum MovementState
+    {
+        Still,
+        Walking,
+        Running,
+        Sprinting
     }
+
     public void Move(Vector2 axis)
     {
+        
         float x = axis.x;
         float y = axis.y;
 
-        if (x == 0 && y == 0)
+
+        float xPos = System.Math.Abs(x);
+        float yPos = System.Math.Abs(y);
+        if (xPos == 0 && yPos == 0)
         {// not walking at all
-            SetMovement(0);
+            if(movementState != MovementState.Still)
+            {
+                movementState = MovementState.Still;
+            }
         }
-        else if (x < 0.5 || y < 0.5)
+        else if (xPos < 0.6 && yPos < 0.6 )
         {//walking
-            SetMovement(1);
+            if (movementState != MovementState.Walking)
+            {
+                movementState = MovementState.Walking;
+
+            }
         }
         else
-        {//running, in here should be a check if sprint is held
-            SetMovement(2);
-        }
+        {//running, in here should be a check if sprint is heldif(movementState == MovementState.Still)
+            if (movementState != MovementState.Running)
+            {
+                movementState = MovementState.Running;
 
+            }
+            
+        }
+        Debug.Log("x " + x + " Y " + y);
+        Debug.Log(movementState);
 
         transform.Translate(Vector3.forward * axis.y * GetSpeed() * Time.deltaTime);
         transform.Translate(Vector3.right * axis.x * speed * Time.deltaTime);
     }
+    public float SpeedReduction;
+    public float SpeedBonus;
+    public IEnumerator SpeedPenalty()
+    {
+        float test;
+
+        yield return new WaitForSeconds(2);
+    }
 
     public float GetSpeed()
     {
+
+        switch (movementState)
+        {
+            case (MovementState.Still):
+                SpeedBonus = 0;
+                break;        
+        
+            case (MovementState.Walking):
+                SpeedBonus = 3;
+                break;        
+        
+            case (MovementState.Running):
+                SpeedBonus = 4;
+                break;        
+        
+            case (MovementState.Sprinting):
+                SpeedBonus = 5;
+                break;
+            
+        }
         float spd = BaseSpeed;
 
         return spd;
@@ -110,3 +139,4 @@ public class PlayerController : MonoBehaviour
     }
 
 }
+

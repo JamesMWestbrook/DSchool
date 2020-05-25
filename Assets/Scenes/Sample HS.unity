@@ -1576,10 +1576,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 384ea729da4b1e545bc6a312754ba23a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseSpeed: 7.09
   CameraSpeed: 80
   Camera: {fileID: 342000002}
   InControl: 1
+  Moving: 0
+  Running: 0
+  Sprinting: 0
 --- !u!4 &342000002 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4431553538370416947, guid: 568e07ac9902a9b43b7255c5638af457,
