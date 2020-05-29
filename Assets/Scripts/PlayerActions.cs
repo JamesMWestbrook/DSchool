@@ -17,6 +17,8 @@ public class PlayerActions : PlayerActionSet
     public PlayerTwoAxisAction RotateCamera;
 
     public PlayerAction Interact;
+    public PlayerAction Run;
+
     public PlayerActions()
     {
         LLeft = CreatePlayerAction("Move Left");
@@ -32,6 +34,7 @@ public class PlayerActions : PlayerActionSet
         RotateCamera = CreateTwoAxisPlayerAction(RLeft, RRight, RDown, RUp);
 
         Interact = CreatePlayerAction("Interact");
+        Run = CreatePlayerAction("Run");
     }
 
     public static PlayerActions CreateWithAllBindings()
@@ -50,7 +53,7 @@ public class PlayerActions : PlayerActionSet
         actions.RUp.AddDefaultBinding(Mouse.NegativeY);
         actions.RDown.AddDefaultBinding(Mouse.PositiveY);
         actions.Interact.AddDefaultBinding(Key.Space);
-
+        actions.Run.AddDefaultBinding(Key.Shift);
 
         actions.LLeft.AddDefaultBinding(InputControlType.LeftStickLeft);
         actions.LRight.AddDefaultBinding(InputControlType.LeftStickRight);
@@ -61,7 +64,7 @@ public class PlayerActions : PlayerActionSet
         actions.RUp.AddDefaultBinding(InputControlType.RightStickUp);
         actions.RDown.AddDefaultBinding(InputControlType.RightStickDown);
         actions.Interact.AddDefaultBinding(InputControlType.Action1);
-
+        
         return actions;
     }
 

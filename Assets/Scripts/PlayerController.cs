@@ -8,20 +8,25 @@ public class PlayerController : MonoBehaviour
     private float BaseSpeed = 3;
     [SerializeField] private float CameraSpeed;
     [SerializeField] private Transform Camera;
+    private Animator anim;
     private float speed = 3;
 
 
     public bool InControl;
     Rigidbody RB;
     PlayerActions playerActions;
-    // Start is called before the first frame update
+
     void Start()
     {
         playerActions = PlayerActions.CreateWithAllBindings();
         RB = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
+        movementState = MovementState.Still;
+        anim.SetBool("Moving", false);
+        anim.SetBool("Running", false);
+        anim.SetBool("Sprinting", false);
     }
 
-    // Update is called once per frame
 
     void Update()
     {
@@ -40,17 +45,18 @@ public class PlayerController : MonoBehaviour
 
     //USE AN ENUM NEXT TIME YOU OPEN THIS DOCUMENT
     MovementState movementState;
-public enum MovementState
+    public enum MovementState
     {
         Still,
         Walking,
-        Running,
-        Sprinting
+        Running
     }
+
+
+
 
     public void Move(Vector2 axis)
     {
-        
         float x = axis.x;
         float y = axis.y;
 
@@ -59,68 +65,65 @@ public enum MovementState
         float yPos = System.Math.Abs(y);
         if (xPos == 0 && yPos == 0)
         {// not walking at all
-            if(movementState != MovementState.Still)
+            if (movementState != MovementState.Still)
             {
                 movementState = MovementState.Still;
+                anim.SetBool("Moving", false);
+                anim.SetBool("Running", false);
+                anim.SetBool("Sprinting", false);
             }
         }
-        else if (xPos < 0.6 && yPos < 0.6 )
+        else if (!playerActions.Run || playerActions.LDown)
         {//walking
             if (movementState != MovementState.Walking)
             {
                 movementState = MovementState.Walking;
-
+                anim.SetBool("Moving", true);
+                anim.SetBool("Running", false);
+                anim.SetBool("Sprinting", false);
             }
         }
-        else
-        {//running, in here should be a check if sprint is heldif(movementState == MovementState.Still)
+        else if (playerActions.Run)
+        {//running
             if (movementState != MovementState.Running)
             {
                 movementState = MovementState.Running;
-
+                anim.SetBool("Moving", true);
+                anim.SetBool("Running", true);
+                anim.SetBool("Sprinting", false);
             }
-            
         }
-        Debug.Log("x " + x + " Y " + y);
-        Debug.Log(movementState);
-
         transform.Translate(Vector3.forward * axis.y * GetSpeed() * Time.deltaTime);
-        transform.Translate(Vector3.right * axis.x * speed * Time.deltaTime);
+        transform.Translate(Vector3.right * axis.x * GetSpeed(false) * Time.deltaTime);
     }
-    public float SpeedReduction;
-    public float SpeedBonus;
-    public IEnumerator SpeedPenalty()
-    {
-        float test;
+    private float SpeedPenalty;
+    private float SpeedBonus = 1;
 
-        yield return new WaitForSeconds(2);
-    }
-
-    public float GetSpeed()
+    public float GetSpeed(bool Forward = true)
     {
 
         switch (movementState)
         {
             case (MovementState.Still):
-                SpeedBonus = 0;
-                break;        
-        
-            case (MovementState.Walking):
-                SpeedBonus = 3;
-                break;        
-        
-            case (MovementState.Running):
-                SpeedBonus = 4;
-                break;        
-        
-            case (MovementState.Sprinting):
-                SpeedBonus = 5;
+                BaseSpeed = 0;
                 break;
-            
-        }
-        float spd = BaseSpeed;
 
+            case (MovementState.Walking):
+                BaseSpeed = 3;
+                break;
+
+            case (MovementState.Running):
+                BaseSpeed = 7;
+                break;
+        }
+
+        float spd = BaseSpeed * SpeedBonus;
+        if (movementState == MovementState.Running && !Forward || movementState == MovementState.Running && playerActions.LDown)
+        {
+            spd -= 4;
+        }
         return spd;
+
     }
 
 
