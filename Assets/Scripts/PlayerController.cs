@@ -32,8 +32,10 @@ public class PlayerController : MonoBehaviour
     {
         if (InControl)
         {
+            CrouchMovement();
             Move(playerActions.MovePlayer.Value);
             RotateCamera(playerActions.RotateCamera);
+        
         }
     }
 
@@ -47,13 +49,35 @@ public class PlayerController : MonoBehaviour
     MovementState movementState;
     public enum MovementState
     {
+        Crouched,
         Still,
         Walking,
         Running
     }
 
+    public bool Crouched;
+    private void CrouchMovement()
+    {
 
 
+
+        if (playerActions.Crouch.WasPressed && movementState != MovementState.Running)
+        {
+            if (Crouched)
+            {
+                Crouched = false;
+                anim.SetBool("Crouching", false);
+
+            }
+            else
+            {
+                Crouched = true;
+                anim.SetBool("Crouching", true);
+
+            }
+        }
+     
+    }
 
     public void Move(Vector2 axis)
     {
@@ -69,6 +93,7 @@ public class PlayerController : MonoBehaviour
             {
                 movementState = MovementState.Still;
                 anim.SetBool("Moving", false);
+                anim.SetBool("Backwards", false);
                 anim.SetBool("Running", false);
                 anim.SetBool("Sprinting", false);
             }
@@ -82,6 +107,11 @@ public class PlayerController : MonoBehaviour
                 anim.SetBool("Running", false);
                 anim.SetBool("Sprinting", false);
             }
+            if (playerActions.LDown)
+            {
+                anim.SetBool("Backwards", true);
+            }
+            else anim.SetBool("Backwards", false);
         }
         else if (playerActions.Run)
         {//running
@@ -104,6 +134,10 @@ public class PlayerController : MonoBehaviour
 
         switch (movementState)
         {
+            case (MovementState.Crouched):
+                BaseSpeed = 1;
+                break;
+
             case (MovementState.Still):
                 BaseSpeed = 0;
                 break;

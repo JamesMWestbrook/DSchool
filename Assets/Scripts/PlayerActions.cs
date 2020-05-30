@@ -18,6 +18,7 @@ public class PlayerActions : PlayerActionSet
 
     public PlayerAction Interact;
     public PlayerAction Run;
+    public PlayerAction Crouch;
 
     public PlayerActions()
     {
@@ -35,6 +36,7 @@ public class PlayerActions : PlayerActionSet
 
         Interact = CreatePlayerAction("Interact");
         Run = CreatePlayerAction("Run");
+        Crouch = CreatePlayerAction("Crouch");
     }
 
     public static PlayerActions CreateWithAllBindings()
@@ -54,6 +56,7 @@ public class PlayerActions : PlayerActionSet
         actions.RDown.AddDefaultBinding(Mouse.PositiveY);
         actions.Interact.AddDefaultBinding(Key.Space);
         actions.Run.AddDefaultBinding(Key.Shift);
+        actions.Crouch.AddDefaultBinding(Key.Control);
 
         actions.LLeft.AddDefaultBinding(InputControlType.LeftStickLeft);
         actions.LRight.AddDefaultBinding(InputControlType.LeftStickRight);
@@ -64,7 +67,8 @@ public class PlayerActions : PlayerActionSet
         actions.RUp.AddDefaultBinding(InputControlType.RightStickUp);
         actions.RDown.AddDefaultBinding(InputControlType.RightStickDown);
         actions.Interact.AddDefaultBinding(InputControlType.Action1);
-        
+        actions.Crouch.AddDefaultBinding(InputControlType.Action2);
+
         return actions;
     }
 
