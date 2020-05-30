@@ -58,9 +58,6 @@ public class PlayerController : MonoBehaviour
     public bool Crouched;
     private void CrouchMovement()
     {
-
-
-
         if (playerActions.Crouch.WasPressed && movementState != MovementState.Running)
         {
             if (Crouched)
@@ -98,7 +95,7 @@ public class PlayerController : MonoBehaviour
                 anim.SetBool("Sprinting", false);
             }
         }
-        else if (!playerActions.Run || playerActions.LDown)
+        else if (!playerActions.Run || playerActions.LDown || playerActions.Crouch)
         {//walking
             if (movementState != MovementState.Walking)
             {
@@ -112,6 +109,10 @@ public class PlayerController : MonoBehaviour
                 anim.SetBool("Backwards", true);
             }
             else anim.SetBool("Backwards", false);
+            if (Crouched)
+            {
+                movementState = MovementState.Crouched;
+            }
         }
         else if (playerActions.Run)
         {//running
@@ -135,7 +136,7 @@ public class PlayerController : MonoBehaviour
         switch (movementState)
         {
             case (MovementState.Crouched):
-                BaseSpeed = 1;
+                BaseSpeed = 2;
                 break;
 
             case (MovementState.Still):
