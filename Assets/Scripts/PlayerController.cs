@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -14,9 +15,10 @@ public class PlayerController : MonoBehaviour
 
     public bool InControl;
     Rigidbody RB;
-    PlayerActions playerActions;
+   public PlayerActions playerActions;
 
-    void Start()
+    
+    void Awake()
     {
         playerActions = PlayerActions.CreateWithAllBindings();
         RB = GetComponent<Rigidbody>();
@@ -27,22 +29,36 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("Sprinting", false);
     }
 
-
     void Update()
     {
+        if (playerActions.Pause.IsPressed) Debug.Log("Paused controller");
         if (InControl)
         {
+            if (playerActions.Run.WasPressed)
+            {
+
+                if (Running && movementState == MovementState.Running) //toggleabilty
+                {
+                    Running = false;
+                }
+                else
+                {
+
+                    Running = true;
+                }
+            }
             CrouchMovement();
             Move(playerActions.MovePlayer.Value);
             RotateCamera(playerActions.RotateCamera);
-        
+
+
+            
         }
     }
 
 
     public bool Moving;
-    public bool Running;
-    public bool Sprinting;
+    [HideInInspector] public  bool Running;
 
 
     //USE AN ENUM NEXT TIME YOU OPEN THIS DOCUMENT
@@ -64,16 +80,13 @@ public class PlayerController : MonoBehaviour
             {
                 Crouched = false;
                 anim.SetBool("Crouching", false);
-
             }
             else
             {
                 Crouched = true;
                 anim.SetBool("Crouching", true);
-
             }
         }
-     
     }
 
     public void Move(Vector2 axis)
@@ -84,8 +97,13 @@ public class PlayerController : MonoBehaviour
 
         float xPos = System.Math.Abs(x);
         float yPos = System.Math.Abs(y);
+
+
+
+        //Idle
         if (xPos == 0 && yPos == 0)
-        {// not walking at all
+        {   
+            Running = false;
             if (movementState != MovementState.Still)
             {
                 movementState = MovementState.Still;
@@ -95,8 +113,11 @@ public class PlayerController : MonoBehaviour
                 anim.SetBool("Sprinting", false);
             }
         }
-        else if (!playerActions.Run || playerActions.LDown || playerActions.Crouch)
-        {//walking
+
+        //Walking
+        else if (!playerActions.Run && !Running || playerActions.LDown || playerActions.Crouch)
+        {
+            Running = false;
             if (movementState != MovementState.Walking)
             {
                 movementState = MovementState.Walking;
@@ -114,8 +135,11 @@ public class PlayerController : MonoBehaviour
                 movementState = MovementState.Crouched;
             }
         }
-        else if (playerActions.Run)
-        {//running
+
+        //Running
+        else if (playerActions.Run.WasPressed || Running)
+        {
+            
             if (movementState != MovementState.Running)
             {
                 movementState = MovementState.Running;

@@ -362,12 +362,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8757182652020734893}
+  - component: {fileID: 1776599038}
   - component: {fileID: 8708468647867449515}
   - component: {fileID: 36617024}
   - component: {fileID: 36617025}
+  - component: {fileID: 1946663656952503074}
   - component: {fileID: 1776599039}
   - component: {fileID: 1776599037}
-  - component: {fileID: 1776599038}
   - component: {fileID: 1776599040}
   m_Layer: 0
   m_Name: TestChar
@@ -405,6 +406,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1776599038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8758377363051040979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8a038fb6d99a94aa4cc6016e95339a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AI: 1
+  InteractText: {fileID: 0}
+  Interactables: []
 --- !u!95 &8708468647867449515
 Animator:
   serializedVersion: 3
@@ -459,6 +475,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Destination: {fileID: 0}
+--- !u!114 &1946663656952503074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8758377363051040979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 384ea729da4b1e545bc6a312754ba23a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraSpeed: 80
+  Camera: {fileID: 1351827534}
+  InControl: 1
+  Moving: 0
+  Running: 0
+  Sprinting: 0
+  Crouched: 0
 --- !u!54 &1776599039
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -489,20 +524,6 @@ CapsuleCollider:
   m_Height: 2.1630425
   m_Direction: 1
   m_Center: {x: 0, y: 0.97327256, z: 0}
---- !u!114 &1776599038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8758377363051040979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f8a038fb6d99a94aa4cc6016e95339a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AI: 1
-  Interactables: []
 --- !u!114 &1776599040
 MonoBehaviour:
   m_ObjectHideFlags: 0
