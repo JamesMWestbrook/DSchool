@@ -6,6 +6,8 @@ using UnityEngine.Animations;
 
 public class PlayerController : MonoBehaviour
 {
+
+    //controller related
     private float BaseSpeed = 3;
     [SerializeField] private float CameraSpeed;
     [SerializeField] private Transform Camera;
@@ -15,9 +17,8 @@ public class PlayerController : MonoBehaviour
 
     public bool InControl;
     Rigidbody RB;
-   public PlayerActions playerActions;
+    public PlayerActions playerActions;
 
-    
     void Awake()
     {
         playerActions = PlayerActions.CreateWithAllBindings();
@@ -52,13 +53,13 @@ public class PlayerController : MonoBehaviour
             RotateCamera(playerActions.RotateCamera);
 
 
-            
+
         }
     }
 
 
     public bool Moving;
-    [HideInInspector] public  bool Running;
+    [HideInInspector] public bool Running;
 
 
     //USE AN ENUM NEXT TIME YOU OPEN THIS DOCUMENT
@@ -102,7 +103,7 @@ public class PlayerController : MonoBehaviour
 
         //Idle
         if (xPos == 0 && yPos == 0)
-        {   
+        {
             Running = false;
             if (movementState != MovementState.Still)
             {
@@ -139,7 +140,7 @@ public class PlayerController : MonoBehaviour
         //Running
         else if (playerActions.Run.WasPressed || Running)
         {
-            
+
             if (movementState != MovementState.Running)
             {
                 movementState = MovementState.Running;

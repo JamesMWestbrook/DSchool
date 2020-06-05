@@ -17,7 +17,6 @@ public class CutsceneControls : MonoBehaviour
     private bool Paused;
     void Start()
     {
-        dir = GetComponent<PlayableDirector>();
         actions = player.playerActions;
     }
 

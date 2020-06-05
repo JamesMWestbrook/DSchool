@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
+[System.Serializable]
 public class SkipTest : MonoBehaviour
 {
     public PlayableDirector dir;
