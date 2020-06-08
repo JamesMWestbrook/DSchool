@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEditor;
 using QFSW.BA.QGUI;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class InventoryItemButton : MonoBehaviour
+public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHandler
 {
     public ItemType itemType;
     public enum ItemType
@@ -21,8 +22,27 @@ public class InventoryItemButton : MonoBehaviour
     public int VisibleIndex;
     public void SetGraphic()
     {
-        image.sprite = item.Icon;
-     }
+        if(item != null)
+        {
+            image.sprite = item.Icon;
+
+        }
+        else
+        {
+            image.sprite = null;
+        }
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        LeanTween.scale(gameObject, new Vector3(1.2f, 1.2f, 1.2f), 0.1f);
+        Debug.Log(this.gameObject.name + " Was selected");
+    }
+    public void OnDeselect(BaseEventData eventData)
+    {
+        Debug.Log(this.gameObject.name + " Was deselected");
+        LeanTween.scale(gameObject, new Vector3(1f, 1f, 1f), 0.1f);
+    }
 }
 
 [CustomEditor(typeof(InventoryItemButton))]

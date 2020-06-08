@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("Moving", false);
         anim.SetBool("Running", false);
         anim.SetBool("Sprinting", false);
+
+       // Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 
     void Update()
