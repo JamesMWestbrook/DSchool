@@ -17,22 +17,27 @@ public class Inventory : MonoBehaviour
     public void ShowInventory()
     {
         HorizontalPanel.enabled = true;
-
-
-        //4 is center one
+        HorizontalPanel.transform.localScale = new Vector3(0, 0, 0);
+        LeanTween.scale(HorizontalPanel.gameObject, new Vector3(1, 1, 1), 0.5f).setEase(LeanTweenType.easeOutQuad);
         if (Items.Count <= 7)
         {
-            //total - 4/2 is the one put in center
+            //total - total/2 is the one put in center
             int total = Items.Count - 1;
-            int centerIndex = Items.Count - 1 - 4 / 2;
-            SpawnButton(centerIndex, 0);
-
+            int centerIndex = Items.Count - 1 - total / 2;
+            
+            int q = 0;
             for (int i = centerIndex - 1; i >= 0; i--)
             {
-                SpawnButton(i, i * 50);
+                SpawnButton(i, (q + 1) * -50);
+                q++;
             }
-
-
+            q = 0;
+            for(int i = centerIndex + 1; i < Items.Count; i++)
+            {
+                SpawnButton(i, (q + 1) * 50);
+                q++;
+            }
+            SpawnButton(centerIndex, 0);
         }
         else //more than 7 items aka more than visible in inventory at once
         {
@@ -42,13 +47,15 @@ public class Inventory : MonoBehaviour
 
     void SpawnButton(int index, int distance = 0)
     {
-        GameObject centerButton = Instantiate(InvButton, HorizontalPanel.transform) as GameObject;
-        centerButton.transform.position = CenterPoint.transform.position;
-        LeanTween.moveLocalX(centerButton, distance, 1f);
-        InventoryItemButton button = centerButton.GetComponent<InventoryItemButton>();
+        GameObject buttonGO = Instantiate(InvButton, HorizontalPanel.transform) as GameObject;
+        buttonGO.transform.position = CenterPoint.transform.position;
+        InventoryItemButton button = buttonGO.GetComponent<InventoryItemButton>();
         button.item = Items[index];
+        button.index = index;
         button.SetGraphic();
-        
+        //LeanTween.scale(buttonGO, new Vector3(1, 1, 1), 0.5f).setEase(LeanTweenType.easeOutQuad);
+        LeanTween.moveLocalX(buttonGO, distance, 0.5f).setEase(LeanTweenType.easeOutQuad).setDelay(0.7f);
+
     }
 
     void Start()

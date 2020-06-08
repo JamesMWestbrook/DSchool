@@ -17,7 +17,8 @@ public class InventoryItemButton : MonoBehaviour
     public Item item;
     public CombatItem combatItem;
     public Image image;
-    public int index; 
+    public int index;
+    public int VisibleIndex;
     public void SetGraphic()
     {
         image.sprite = item.Icon;
