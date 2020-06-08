@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
 
 public class ScaleTween : MonoBehaviour
@@ -13,6 +14,7 @@ public class ScaleTween : MonoBehaviour
     public void OnClose()
     {
         LeanTween.scale(gameObject, new Vector3(1, 1, 1), 0.5f);
+        LeanTween.move(gameObject, new Vector2(1,0), 1);
     }
 
     // Update is called once per frame

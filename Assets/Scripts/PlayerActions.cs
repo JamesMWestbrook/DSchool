@@ -18,7 +18,11 @@ public class PlayerActions : PlayerActionSet
     public PlayerAction RDown;
     public PlayerTwoAxisAction RotateCamera;
 
+
+
     public PlayerAction Interact;
+    public PlayerAction Inventory;
+    
     public PlayerAction Run;
     public PlayerAction Crouch;
     public PlayerAction Pause;
@@ -39,6 +43,8 @@ public class PlayerActions : PlayerActionSet
         RotateCamera = CreateTwoAxisPlayerAction(RLeft, RRight, RDown, RUp);
 
         Interact = CreatePlayerAction("Interact");
+        Inventory = CreatePlayerAction("InventoryButton");
+
         Run = CreatePlayerAction("Run");
         Crouch = CreatePlayerAction("Crouch");
         Pause = CreatePlayerAction("Pause");
@@ -47,6 +53,8 @@ public class PlayerActions : PlayerActionSet
     public static PlayerActions CreateWithAllBindings()
     {
         var actions = new PlayerActions();
+
+        //Keyboard + mouse
         actions.LLeft.AddDefaultBinding(Key.A);
         actions.LRight.AddDefaultBinding(Key.D);
         actions.LUp.AddDefaultBinding(Key.W);
@@ -62,12 +70,14 @@ public class PlayerActions : PlayerActionSet
         actions.RDown.AddDefaultBinding(Mouse.PositiveY);
         
         actions.Interact.AddDefaultBinding(Key.Space);
+        actions.Inventory.AddDefaultBinding(Key.Tab);
+
         actions.Run.AddDefaultBinding(Key.Shift);
         actions.Crouch.AddDefaultBinding(Key.Control);
         actions.Pause.AddDefaultBinding(Key.Return);
         actions.Pause.AddDefaultBinding(Key.Escape);
 
-
+        //Controller
         actions.LLeft.AddDefaultBinding(InputControlType.LeftStickLeft);
         actions.LRight.AddDefaultBinding(InputControlType.LeftStickRight);
         actions.LUp.AddDefaultBinding(InputControlType.LeftStickUp);
@@ -79,6 +89,8 @@ public class PlayerActions : PlayerActionSet
 
 
         actions.Interact.AddDefaultBinding(InputControlType.Action1);
+        actions.Inventory.AddDefaultBinding(InputControlType.Action4);
+
         actions.Run.AddDefaultBinding(InputControlType.LeftBumper);
         actions.Crouch.AddDefaultBinding(InputControlType.Action2);
         actions.Pause.AddDefaultBinding(InputControlType.Start);

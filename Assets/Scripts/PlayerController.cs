@@ -32,29 +32,33 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (playerActions.Pause.IsPressed) Debug.Log("Paused controller");
-        if (InControl)
+        if (!InControl) return;
+
+        if (playerActions.Inventory.WasPressed)
         {
-            if (playerActions.Run.WasPressed)
+            InControl = false;
+            anim.SetBool("Moving", false);
+            anim.SetBool("Backwards", false);
+            anim.SetBool("Running", false);
+
+            Inventory.instance.ShowInventory();
+        }
+        if (playerActions.Run.WasPressed)
+        {
+
+            if (Running && movementState == MovementState.Running) //toggleabilty
+            {
+                Running = false;
+            }
+            else
             {
 
-                if (Running && movementState == MovementState.Running) //toggleabilty
-                {
-                    Running = false;
-                }
-                else
-                {
-
-                    Running = true;
-                }
+                Running = true;
             }
-            CrouchMovement();
-            Move(playerActions.MovePlayer.Value);
-            RotateCamera(playerActions.RotateCamera);
-
-
-
         }
+        CrouchMovement();
+        Move(playerActions.MovePlayer.Value);
+        RotateCamera(playerActions.RotateCamera);
     }
 
 
@@ -151,6 +155,12 @@ public class PlayerController : MonoBehaviour
         }
         transform.Translate(Vector3.forward * axis.y * GetSpeed() * Time.deltaTime);
         transform.Translate(Vector3.right * axis.x * GetSpeed(false) * Time.deltaTime);
+    }
+    public void StopMovement()
+    {
+        anim.SetBool("Moving", false);
+        anim.SetBool("Backwards", false);
+        anim.SetBool("Running", false);
     }
     private float SpeedPenalty;
     private float SpeedBonus = 1;

@@ -14,15 +14,15 @@ public class PlayerInfo : MonoBehaviour
     {
         Data.Items = GetComponent<Inventory>().Items;
         Data.CombatItems = GetComponent<Inventory>().CombatItems;
-
+/*
         if (Save)
         {
             SaveGameData();
 
         }
         else LoadGameData();
-        // LoadGameData();
-    }
+    */
+        }
 
 
     public void LoadGameData()
