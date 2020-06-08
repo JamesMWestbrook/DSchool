@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
@@ -14,10 +15,40 @@ public class Inventory : MonoBehaviour
     public List<Item> Items;
     public List<CombatItem> CombatItems;
    [SerializeField] private List<GameObject> Buttons;
+    public int CurrentButton;
     // Start is called before the first frame update
-
+    public MenuActions actions;
 
     bool EightItems;
+
+    void Start()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+        HorizontalPanel.gameObject.SetActive(false);
+        actions = MenuActions.CreateWithAllBindings();
+    }
+    void Update()
+    {
+        if (actions.Horizontal.WasPressed)
+        {
+            Debug.Log("Was pressed");
+            if (actions.Left.WasPressed)
+            {
+
+            }else if (actions.Right.WasPressed)
+            {
+
+            }
+        }
+    }
+
     public void ShowInventory()
     {
         HorizontalPanel.gameObject.SetActive(true);
@@ -130,22 +161,7 @@ public class Inventory : MonoBehaviour
         else Buttons.Insert(index, buttonGO);
     }
 
-    void Start()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-        HorizontalPanel.gameObject.SetActive(false);
-    }
+  
 
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
 }

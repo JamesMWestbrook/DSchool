@@ -43,6 +43,7 @@ public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHand
     {
         LeanTween.scale(gameObject, new Vector3(1.2f, 1.2f, 1.2f), 0.1f);
         Debug.Log(this.gameObject.name + " Was selected");
+        inventory.CurrentButton = index;
     }
     public void OnDeselect(BaseEventData eventData)
     {

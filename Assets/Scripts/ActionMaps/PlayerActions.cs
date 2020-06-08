@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using InControl;
-using MultiplayerBasicExample;
 
 public class PlayerActions : PlayerActionSet
 {
