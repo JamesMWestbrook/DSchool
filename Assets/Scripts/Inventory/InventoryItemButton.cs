@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 
 public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHandler
 {
+    [SerializeField] Inventory inventory;
     public ItemType itemType;
     public enum ItemType
     {
@@ -20,6 +21,11 @@ public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHand
     public Image image;
     public int index;
     public int VisibleIndex;
+
+    public void Awake()
+    {
+        inventory = GetComponentInParent(typeof(Inventory)) as Inventory;
+    }
     public void SetGraphic()
     {
         if(item != null)

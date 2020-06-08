@@ -10,61 +10,85 @@ public class Inventory : MonoBehaviour
   [SerializeField]  private GameObject InvButton;
     public Image HorizontalPanel;
     public Image CenterPoint;
+    [SerializeField] private Image RightPoint;
     public List<Item> Items;
     public List<CombatItem> CombatItems;
    [SerializeField] private List<GameObject> Buttons;
     // Start is called before the first frame update
 
-    
+
+    bool EightItems;
     public void ShowInventory()
     {
         HorizontalPanel.gameObject.SetActive(true);
         HorizontalPanel.transform.localScale = new Vector3(0, 0, 0);
         LeanTween.scale(HorizontalPanel.gameObject, new Vector3(1, 1, 1), 0.3f).setEase(LeanTweenType.easeOutQuad);
 
-
-
         int q = -150;
         int i;
+        int itemModifier;
+        EightItems =  Items.Count == 8;
         if (Items.Count <= 7)
         {
             i = 1;
-            foreach(GameObject button in Buttons)
-            {
-                button.GetComponent<InventoryItemButton>().item = null;
-                button.SetActive(false);
-            }
-            for (i = 1; i <= Items.Count; i++)
-            {
-                Buttons[i].SetActive(true);
-                Buttons[i].transform.position = CenterPoint.transform.position;
-
-                LeanTween.moveLocalX(Buttons[i], q, 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
-                q += 50;
-                InventoryItemButton button = Buttons[i].GetComponent<InventoryItemButton>();
-                Debug.Log(Items[i - 1] + " " + i);
-                if(Items[i - 1] != null) {
-                    button.item = Items[i - 1];
-                    button.SetGraphic();
-                    button.index = i - 1;
-                }
-            }
-            Buttons[4].GetComponent<Button>().Select();
+            itemModifier = 1;
         }
         else //more than 7 items (aka more than visible in inventory at once)
         {
-            if(Items.Count >= 9)
+
+            q = -200;
+            i = 0;
+            itemModifier = 0;
+            if (Items.Count >= 9)
             {
 
             }
-            else//item count is 8
+            else if (Items.Count == 8)
             {
-
+                EightItems = true;
             }
-
         }
+        Debug.Log("Eight items " + EightItems);
+        foreach (GameObject button in Buttons)
+        {
+            button.GetComponent<InventoryItemButton>().item = null;
+            button.SetActive(false);
+        }
+        for ( ;  i < Items.Count || i < 8; i++)
+        {
+            Buttons[i].SetActive(true);
+            if(EightItems && i == 0 || EightItems && i == 8 || Items.Count >= 8 && i == 0 || Items.Count >= 8 && i >= 8)
+            {
+                if(EightItems && i >= 7 )
+                {
 
+                }
+            }
+            else
+            {
+                Buttons[i].transform.position = CenterPoint.transform.position;
+                LeanTween.moveLocalX(Buttons[i], q, 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
+            }
 
+            q += 50;
+            InventoryItemButton button = Buttons[i].GetComponent<InventoryItemButton>();
+            Debug.Log(Items[i - itemModifier] + " " + i);
+            if (Items[i - itemModifier] != null)
+            {
+                button.item = Items[i - itemModifier];
+                button.SetGraphic();
+                button.index = i - itemModifier;
+
+                if(i == 0 && EightItems)
+                {
+                    Buttons[8].SetActive(true);
+                    button = Buttons[8].GetComponent<InventoryItemButton>();
+                    button.item = Items[0];
+                    button.SetGraphic();
+                }
+            }
+        }
+        Buttons[4].GetComponent<Button>().Select();
 
 
     }
