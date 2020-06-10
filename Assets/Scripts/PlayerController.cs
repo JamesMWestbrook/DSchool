@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("Backwards", false);
             anim.SetBool("Running", false);
 
-            Inventory.instance.ShowInventory();
+            Inventory.instance.OpenInventory();
         }
         if (playerActions.Run.WasPressed)
         {

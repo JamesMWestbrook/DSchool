@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+
 
 [CreateAssetMenu(fileName = "ItemSO", menuName = "Items/Item", order = 0)]
 public class Item : ScriptableObject
@@ -17,10 +19,18 @@ public class Item : ScriptableObject
     public enum ItemType
     {
         Normal,
-        Key
+        Key,
+        Combat
     }
 
     public int KeyIndex;
     public bool NameIsKnown = true;
     public string AssummedDescription;
+}
+
+
+[CustomEditor(typeof(Item))]
+public class ItemEditor : Editor
+{ 
+
 }
