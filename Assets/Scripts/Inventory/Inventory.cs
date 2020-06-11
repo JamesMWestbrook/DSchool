@@ -156,8 +156,12 @@ public class Inventory : MonoBehaviour
             {
                 Button.item = null;
                 Button.SetGraphic();
+
+                ButtonOpacity(Buttons[i], 0f);
+
                 if (Items.Count < 8)
                 {
+
                     Buttons[i].SetActive(false);
                 }
                 continue;
@@ -167,6 +171,7 @@ public class Inventory : MonoBehaviour
             if (Horizontal) LeanTween.moveLocalX(Button.gameObject, q, 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
             else LeanTween.moveLocalY(Button.gameObject, q, 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
             //LeanTween.move(Button.gameObject, new Vector2(xMovement, yMovement), 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
+
 
             if (Horizontal) q += 50;
             else q += 50;
@@ -193,10 +198,21 @@ public class Inventory : MonoBehaviour
         Buttons[index].GetComponent<Button>().Select();
         Buttons[index].GetComponent<InventoryItemButton>().OnSelect(null);
     }
+    public void ButtonOpacity(GameObject button, float EndOpacity)
+    {
+        Color BGtarget = button.GetComponent<Image>().color;
+        BGtarget.a = EndOpacity;
+        Image BG = button.GetComponent<Image>();
+        LeanTween.value(BG.gameObject, (Color x) => BG.color = x, BG.color, BGtarget, 0.5f);
 
+        Image FG = button.transform.GetChild(0).GetComponent<Image>();
+        Color FGtarget = FG.color;
+        FGtarget.a = EndOpacity;
+        LeanTween.value(FG.gameObject, (Color x) => FG.color = x, FG.color, FGtarget, 0.5f);
+    }
     public void ScrollButtons(bool Right = true)
     {
-        StartCoroutine(LockInputTimer(0.7f));
+        StartCoroutine(LockInputTimer(0.3f));
         List<GameObject> Buttons = new List<GameObject>();
         List<Item> items = new List<Item>();
         int index = 0;
@@ -242,6 +258,10 @@ public class Inventory : MonoBehaviour
                 if (Horizontal)
                 {
                     if (i == 0) continue;
+                    if(i == 8)
+                    {
+                        ButtonOpacity(Buttons[i], 1f);
+                    }
                     LeanTween.moveLocalX(Buttons[i], q, 0.3f);
                     q += 50;
                 }
@@ -266,9 +286,8 @@ public class Inventory : MonoBehaviour
                     newItemButton.item = items[0];
                     newItemButton.itemIndex = 0;
                 }
-
-
                 newItemButton.SetGraphic();
+                
                 LeanTween.moveLocalX(Buttons[0], 200, 0.0f);
                 GameObject button = Buttons[0];
                 Buttons.RemoveAt(0);
@@ -304,13 +323,28 @@ public class Inventory : MonoBehaviour
 
             if (Horizontal)
             {
+                InventoryItemButton newItemButton = Buttons[0].GetComponent<InventoryItemButton>();
+                if(newItemButton.itemIndex >= 0)
+                {
+                    newItemButton.item = items[newItemButton.itemIndex];
+
+                }
+                else //if we already hit the minimum
+                {
+                    int maxItem = items.Count - 1;
+                    newItemButton.item = items[maxItem];
+                    newItemButton.itemIndex = maxItem;
+                }
+                newItemButton.SetGraphic();
 
                 LeanTween.moveLocalX(Buttons[8], -200, 0.0f);
                 GameObject button = Buttons[8];
                 Buttons.RemoveAt(8);
                 Buttons.Insert(0, button);
-                Buttons[0].GetComponent<InventoryItemButton>().item = null;
-                Buttons[0].GetComponent<InventoryItemButton>().SetGraphic();
+                InventoryItemButton movedButton = Buttons[0].GetComponent<InventoryItemButton>();
+                movedButton.item = null;
+                movedButton.SetGraphic();
+                movedButton.itemIndex = newItemButton.itemIndex - 1;
                 RedoButtonIndex();
 
 
