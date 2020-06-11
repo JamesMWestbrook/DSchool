@@ -6,5 +6,5 @@ using UnityEngine;
 public class Data 
 {
     public List<Item> Items;
-    public List<CombatItem> CombatItems;
+    public List<Item> CombatItems;
 }

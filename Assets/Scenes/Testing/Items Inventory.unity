@@ -1188,7 +1188,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 366218287}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
   m_Name: 
@@ -1486,7 +1486,7 @@ MonoBehaviour:
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
   m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
+  m_InputActionsPerSecond: 5
   m_RepeatDelay: 0.5
   m_ForceModuleActive: 0
 --- !u!114 &710207630
@@ -2470,6 +2470,17 @@ MonoBehaviour:
     type: 3}
   HorizontalPanel: {fileID: 366218289}
   CenterPoint: {fileID: 1181543730}
+  ButtonsHor:
+  - {fileID: 2046793763}
+  - {fileID: 808277985}
+  - {fileID: 802115389}
+  - {fileID: 2035676407}
+  - {fileID: 2024018883}
+  - {fileID: 361109172}
+  - {fileID: 188699099}
+  - {fileID: 1843239048}
+  - {fileID: 1163107236}
+  ButtonsVert: []
   RightPoint: {fileID: 1025643721}
   Items:
   - {fileID: 11400000, guid: 80482c99fb404f942a5ad579a1fb3920, type: 2}
@@ -2483,27 +2494,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1867e693616a7014fb2b6d599efb129c, type: 2}
   - {fileID: 11400000, guid: 1867e693616a7014fb2b6d599efb129c, type: 2}
   CombatItems:
-  - {fileID: 11400000, guid: 338f4a3f4351bd842b7c9d11fc0abd5c, type: 2}
-  - {fileID: 11400000, guid: 338f4a3f4351bd842b7c9d11fc0abd5c, type: 2}
-  - {fileID: 11400000, guid: 0d125e7fd42e7bb42aac18b051aafc56, type: 2}
-  - {fileID: 11400000, guid: 338f4a3f4351bd842b7c9d11fc0abd5c, type: 2}
-  - {fileID: 11400000, guid: 0d125e7fd42e7bb42aac18b051aafc56, type: 2}
-  - {fileID: 11400000, guid: 0d125e7fd42e7bb42aac18b051aafc56, type: 2}
-  - {fileID: 11400000, guid: 0d125e7fd42e7bb42aac18b051aafc56, type: 2}
-  - {fileID: 11400000, guid: 0d125e7fd42e7bb42aac18b051aafc56, type: 2}
-  - {fileID: 11400000, guid: 0d125e7fd42e7bb42aac18b051aafc56, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  KeyItems: []
   CurrentButton: 0
-  ButtonsHor:
-  - {fileID: 2046793763}
-  - {fileID: 808277985}
-  - {fileID: 802115389}
-  - {fileID: 2035676407}
-  - {fileID: 2024018883}
-  - {fileID: 361109172}
-  - {fileID: 188699099}
-  - {fileID: 1843239048}
-  - {fileID: 1163107236}
-  ButtonsVert: []
+  LockedInput: 0
+  SelectedItem: 0
   currentMenu: 0
 --- !u!1 &1098658004
 GameObject:
@@ -5542,6 +5545,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Colors.m_SelectedColor.b
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898290199627766396, guid: 3b642c46f9108504fb2d502bf1d2c369,
+        type: 3}
+      propertyPath: m_Colors.m_PressedColor.r
+      value: 0.3584906
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898290199627766396, guid: 3b642c46f9108504fb2d502bf1d2c369,
+        type: 3}
+      propertyPath: m_Colors.m_PressedColor.g
+      value: 0.33650768
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898290199627766396, guid: 3b642c46f9108504fb2d502bf1d2c369,
+        type: 3}
+      propertyPath: m_Colors.m_PressedColor.b
+      value: 0.33650768
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898290199627766396, guid: 3b642c46f9108504fb2d502bf1d2c369,
+        type: 3}
+      propertyPath: m_Colors.m_ColorMultiplier
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2898290199627766397, guid: 3b642c46f9108504fb2d502bf1d2c369,
         type: 3}

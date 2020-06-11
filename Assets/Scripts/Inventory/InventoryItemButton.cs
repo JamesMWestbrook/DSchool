@@ -17,9 +17,9 @@ public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHand
         Combat
     }
     public Item item;
-    public CombatItem combatItem;
     public Image image;
-    public int index;
+    public int buttonIndex;
+    public int itemIndex;
     public int VisibleIndex;
 
     public void Awake()
@@ -42,12 +42,19 @@ public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHand
     public void OnSelect(BaseEventData eventData)
     {
         LeanTween.scale(gameObject, new Vector3(1.2f, 1.2f, 1.2f), 0.1f);
-        Debug.Log(this.gameObject.name + " Was selected");
-        inventory.CurrentButton = index;
+        inventory.SetButton(buttonIndex);
+        if (buttonIndex == 0 && inventory.Items.Count >= 8)
+        {
+            inventory.ScrollButtons(false);
+        }
+        else if(buttonIndex == 8 && inventory.Items.Count >= 8)
+        {
+            inventory.ScrollButtons();
+
+        }
     }
     public void OnDeselect(BaseEventData eventData)
     {
-        Debug.Log(this.gameObject.name + " Was deselected");
         LeanTween.scale(gameObject, new Vector3(1f, 1f, 1f), 0.1f);
     }
 }
@@ -80,7 +87,7 @@ public class InvButtonEditor : Editor
         SerializedProperty image = serializedObject.FindProperty("image");
         EditorGUILayout.PropertyField(image);
 
-        SerializedProperty index = serializedObject.FindProperty("index");
+        SerializedProperty index = serializedObject.FindProperty("itemIndex");
         EditorGUILayout.PropertyField(index);
 
         serializedObject.ApplyModifiedProperties();

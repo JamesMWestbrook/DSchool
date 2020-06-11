@@ -17,7 +17,7 @@ public class MenuActions : PlayerActionSet
     public PlayerAction Confirm;
     public PlayerAction Present;
 
-
+    public PlayerAction KeySwitch;
 
 
     public MenuActions()
@@ -32,6 +32,8 @@ public class MenuActions : PlayerActionSet
 
          Confirm = CreatePlayerAction("Confirm");
          Present = CreatePlayerAction("Present item");
+
+        KeySwitch = CreatePlayerAction("Switch to/from Key items");
     }
 
     public static MenuActions CreateWithAllBindings()
@@ -51,6 +53,8 @@ public class MenuActions : PlayerActionSet
         actions.Confirm.AddDefaultBinding(Key.Space);
         actions.Present.AddDefaultBinding(Key.Return);
 
+        actions.KeySwitch.AddDefaultBinding(Key.CapsLock);
+
         //controller
         actions.Left.AddDefaultBinding(InputControlType.DPadLeft);
         actions.Right.AddDefaultBinding(InputControlType.DPadRight);
@@ -60,6 +64,7 @@ public class MenuActions : PlayerActionSet
 
         actions.Confirm.AddDefaultBinding(InputControlType.Action1);
         actions.Present.AddDefaultBinding(InputControlType.Action4);
+        actions.KeySwitch.AddDefaultBinding(InputControlType.RightBumper);
 
         return actions;
     }
