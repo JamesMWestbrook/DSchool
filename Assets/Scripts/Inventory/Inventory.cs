@@ -96,12 +96,12 @@ public class Inventory : MonoBehaviour
             if (currentMenu == ListType.Items)
             {
                 CreateButtons(true, ListType.KeyItems);
-                OpenedItems = false;
                 StartCoroutine(LockInputTimer(0.3f));
             }
             else if (currentMenu == ListType.KeyItems)
             {
-
+                CreateButtons(true, ListType.Items);
+                StartCoroutine(LockInputTimer(0.3f));
             }
 
         }
@@ -143,13 +143,17 @@ public class Inventory : MonoBehaviour
                 Buttons = ButtonsHor;
                 currentMenu = ListType.Items;
                 _Items = Items;
+                OpenedItems = true;
                 break;
             case ListType.Combat:
+
                 break;
             case ListType.KeyItems:
                 Buttons = ButtonsHor;
                 _Items = KeyItems;
                 currentMenu = ListType.KeyItems;
+                OpenedItems = false;
+
                 break;
         }
 
@@ -203,6 +207,7 @@ public class Inventory : MonoBehaviour
 
             Button.transform.position = CenterPoint.transform.position;
             //  if (Horizontal) LeanTween.moveLocalX(Button.gameObject, q, 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
+            ButtonOpacity(Buttons[i], 1f);
             if (Horizontal) LeanTween.moveLocalX(Button.gameObject, q, 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
             else LeanTween.moveLocalY(Button.gameObject, q, 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
             //LeanTween.move(Button.gameObject, new Vector2(xMovement, yMovement), 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
@@ -220,16 +225,6 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        /*
-        if(_Items.Count < 8)
-        {
-            InventoryItemButton Button = Buttons[_Items.Count].GetComponent<InventoryItemButton>();
-            Button.gameObject.SetActive(true);
-            Button.item = _Items[_Items.Count-1];
-            Button.itemIndex = _Items.Count-1;
-            Button.SetGraphic();
-        }*/
-
         if (currentMenu == ListType.Combat)
         {
             SelectedItem = index;
@@ -246,17 +241,17 @@ public class Inventory : MonoBehaviour
         // StartCoroutine(DelayedFunction(RedoButtonIndex, 0.5f));
 
     }
-    public void ButtonOpacity(GameObject button, float EndOpacity)
+    public void ButtonOpacity(GameObject button, float EndOpacity, float duration = 0.5f)
     {
         Color BGtarget = button.GetComponent<Image>().color;
         BGtarget.a = EndOpacity;
         Image BG = button.GetComponent<Image>();
-        LeanTween.value(BG.gameObject, (Color x) => BG.color = x, BG.color, BGtarget, 0.5f);
+        LeanTween.value(BG.gameObject, (Color x) => BG.color = x, BG.color, BGtarget, duration);
 
         Image FG = button.transform.GetChild(0).GetComponent<Image>();
         Color FGtarget = FG.color;
         FGtarget.a = EndOpacity;
-        LeanTween.value(FG.gameObject, (Color x) => FG.color = x, FG.color, FGtarget, 0.5f);
+        LeanTween.value(FG.gameObject, (Color x) => FG.color = x, FG.color, FGtarget, duration);
     }
 
     public void ScrollButtons(Vector2 moveValue, Vector2 incrementValue, int VisibleButton, int MovedInvsButton, int ItemIndexModifier, Vector2 InvsDestination)
