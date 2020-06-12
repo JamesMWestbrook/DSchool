@@ -173,7 +173,7 @@ public class Inventory : MonoBehaviour
             }
 
             Button.transform.position = CenterPoint.transform.position;
-          //  if (Horizontal) LeanTween.moveLocalX(Button.gameObject, q, 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
+            //  if (Horizontal) LeanTween.moveLocalX(Button.gameObject, q, 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
             if (Horizontal) LeanTween.moveLocalX(Button.gameObject, q, 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
             else LeanTween.moveLocalY(Button.gameObject, q, 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
             //LeanTween.move(Button.gameObject, new Vector2(xMovement, yMovement), 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
@@ -203,7 +203,7 @@ public class Inventory : MonoBehaviour
 
         Buttons[index].GetComponent<Button>().Select();
         Buttons[index].GetComponent<InventoryItemButton>().OnSelect(null);
-       // StartCoroutine(DelayedFunction(RedoButtonIndex, 0.5f));
+        // StartCoroutine(DelayedFunction(RedoButtonIndex, 0.5f));
 
     }
     public void ButtonOpacity(GameObject button, float EndOpacity)
@@ -222,7 +222,7 @@ public class Inventory : MonoBehaviour
 
 
 
-    public void ScrollButtons(float xValue, float yValue, float xIncrement, float yIncrement)
+    public void ScrollButtons(Vector2 moveValue, Vector2 incrementValue, int VisibleButton, int MovedInvsButton, int ItemIndexModifier, Vector2 InvsDestination)
     {
         List<GameObject> _Buttons = new List<GameObject>();
         List<Item> _Items = new List<Item>();
@@ -242,54 +242,40 @@ public class Inventory : MonoBehaviour
                 break;
         }
 
+        InventoryItemButton newItemButton = _Buttons[VisibleButton].GetComponent<InventoryItemButton>();
 
-        int VisibleButton = 0;
-        int MovedInvsButton = 0;
-        int ItemIndexModifier = 0;
-        InventoryItemButton newItemButton = new InventoryItemButton();
+        if (VisibleButton == 8)
+        { // right or up
+            if (newItemButton.itemIndex < _Items.Count)
 
-
-            
-
-        if (xIncrement < 0 || yIncrement < 0)
-        {
-            VisibleButton = 0;
-            MovedInvsButton = 8;
-            ItemIndexModifier = -1;
-            newItemButton = _Buttons[VisibleButton].GetComponent<InventoryItemButton>();
-
-            if (newItemButton.itemIndex >= 0)
             {
                 newItemButton.item = _Items[newItemButton.itemIndex];
-
             }
             else
             {
                 //already hit minimum
-                newItemButton.item = _Items[_Items.Count - 1];
-                newItemButton.itemIndex = _Items.Count - 1;
+                newItemButton.item = _Items[0];
+                newItemButton.itemIndex = 0;
             }
         }
-        else if (xIncrement > 0 || yIncrement > 0)
-        {
-            //Moving from right to left(you're on right side)
-            //Or moving from Up to down(You're on top side)
-            VisibleButton = 8;
-            MovedInvsButton = 0;
-            ItemIndexModifier = 1;
-            newItemButton = _Buttons[VisibleButton].GetComponent<InventoryItemButton>();
-            if (newItemButton.itemIndex < _Items.Count)
+        else
+
+        { //left or down
+            if (newItemButton.itemIndex >= 0)
             {
                 newItemButton.item = _Items[newItemButton.itemIndex];
             }
             else
             {
-                //already passed max
-                newItemButton.item = _Items[0];
-                newItemButton.itemIndex = 0;
+                //already passed minimum
+
+                newItemButton.item = _Items[_Items.Count - 1];
+                newItemButton.itemIndex = _Items.Count - 1;
             }
         }
+
         newItemButton.SetGraphic();
+
 
         StartCoroutine(LockInputTimer(0.3f));
         StartCoroutine(LockButtons(_Buttons));
@@ -298,25 +284,24 @@ public class Inventory : MonoBehaviour
             if (i == MovedInvsButton) continue;
             if (i == VisibleButton) ButtonOpacity(_Buttons[i], 1f);
 
-            LeanTween.moveLocal(_Buttons[i], new Vector2(xValue, yValue),0.3f);
-            xValue += xIncrement;
-            yValue += yIncrement;
+            LeanTween.moveLocal(_Buttons[i], new Vector2(moveValue.x, moveValue.y), 0.3f);
+            moveValue.x += incrementValue.x;
+            moveValue.y += incrementValue.y;
 
         }
 
-        ButtonOpacity(_Buttons[MovedInvsButton], 0f);
-//        LeanTween.move(_Buttons[MovedInvsButton], LastPos, 0.0f);
-        LeanTween.moveLocal(_Buttons[MovedInvsButton], new Vector2(xValue, yValue), 0.0f);
+    //    ButtonOpacity(_Buttons[MovedInvsButton], 0f);
+        LeanTween.moveLocal(_Buttons[MovedInvsButton], InvsDestination, 0.0f);
+       // LeanTween.moveLocal(_Buttons[MovedInvsButton], new Vector2(moveValue.x, moveValue.y), 0.0f);
         GameObject button = _Buttons[MovedInvsButton];
-        _Buttons.RemoveAt(0);
-
-        if (xIncrement < 0 || yIncrement < 0)
-        {//left or down
-            _Buttons.Insert(0, button);
+        //_Buttons.RemoveAt(0);
+        _Buttons.RemoveAt(MovedInvsButton);
+        if (VisibleButton == 8){ //Right
+            _Buttons.Add(button);
         }
         else
-        {
-            _Buttons.Add(button);
+        {//left
+            _Buttons.Insert(0, button);
         }
 
         InventoryItemButton movedButton = _Buttons[VisibleButton].GetComponent<InventoryItemButton>();
@@ -324,7 +309,7 @@ public class Inventory : MonoBehaviour
         movedButton.SetGraphic();
         movedButton.itemIndex = newItemButton.itemIndex + ItemIndexModifier;
         //RedoButtonIndex();
-        StartCoroutine(DelayedFunction(RedoButtonIndex, 0.4f));
+        StartCoroutine(DelayedFunction(RedoButtonIndex, 0.3f));
 
         ButtonOpacity(_Buttons[MovedInvsButton], 0f);
     }

@@ -6,7 +6,7 @@ using QFSW.BA.QGUI;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHandler
+public class InventoryItemButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
     [SerializeField] Inventory inventory;
     public ItemType itemType;
@@ -22,10 +22,8 @@ public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHand
     public int itemIndex;
     public int VisibleIndex;
     public Axis axis;
-    private float xValue;
-    private float yValue;
-    private float xIncrement;
-    private float yIncrement;
+    public Vector2 moveValue;
+    public Vector2 incrementValue;
 
     public enum Axis
     {
@@ -38,7 +36,7 @@ public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHand
     }
     public void SetGraphic()
     {
-        if(item != null)
+        if (item != null)
         {
             image.sprite = item.Icon;
 
@@ -56,35 +54,35 @@ public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHand
         if (buttonIndex == 0 && inventory.Items.Count >= 8)//moving left/down
         {
             //inventory.OldScrollButtons(false);
-            if(axis == Axis.Horizontal)
+            if (axis == Axis.Horizontal)
             {
-                xValue = -100;
-                xIncrement = -50;
+                moveValue.x = -150;
+                incrementValue.x = 50;
             }
             else
             {//ignore until implementing vertical
 
-            }
-            inventory.ScrollButtons(xValue, yValue, xIncrement, yIncrement);
-//            inventory.ScrollButtons(Movement);
+            }                       //1     2       3           4           5  6  7
+            inventory.ScrollButtons(moveValue, incrementValue, 0, 8, -1, new Vector2(-200,0));
+            //            inventory.ScrollButtons(Movement);
         }
 
-        else if(buttonIndex == 8 && inventory.Items.Count >= 8)//moving right/up
+        else if (buttonIndex == 8 && inventory.Items.Count >= 8)//moving right/up
         {
             // inventory.OldScrollButtons();
             if (axis == Axis.Horizontal)
             {
-                xValue = -200;
-                xIncrement  = 50;
+                moveValue.x = -200;
+                incrementValue.x = 50;
             }
             else
             {//ignore until implementing vertical
 
             }
-            inventory.ScrollButtons(xValue, yValue,xIncrement, yIncrement);
+            inventory.ScrollButtons(moveValue, incrementValue, 8, 0, 1, new Vector2(200, 0));
         }
 
-        
+
     }
     public void OnDeselect(BaseEventData eventData)
     {
@@ -101,14 +99,14 @@ public class InvButtonEditor : Editor
         SerializedProperty itemType = serializedObject.FindProperty("itemType");
         EditorGUILayout.PropertyField(itemType);
         switch ((InventoryItemButton.ItemType)itemType.intValue)
-//        switch (script.itemType)
+        //        switch (script.itemType)
         {
             case InventoryItemButton.ItemType.Usable:
                 SerializedProperty item = serializedObject.FindProperty("item");
                 EditorGUILayout.PropertyField(item);
                 break;
             case InventoryItemButton.ItemType.Key:
-               // SerializedProperty key = serializedObject.FindProperty("key");
+                // SerializedProperty key = serializedObject.FindProperty("key");
                 //EditorGUILayout.PropertyField(key);
                 break;
             case InventoryItemButton.ItemType.Combat:
@@ -119,7 +117,7 @@ public class InvButtonEditor : Editor
 
         SerializedProperty image = serializedObject.FindProperty("image");
         EditorGUILayout.PropertyField(image);
-        
+
         SerializedProperty buttonIndex = serializedObject.FindProperty("buttonIndex");
         EditorGUILayout.PropertyField(buttonIndex);
 
@@ -131,5 +129,5 @@ public class InvButtonEditor : Editor
 
 
 
-    
+
 }
