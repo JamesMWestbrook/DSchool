@@ -58,13 +58,14 @@ public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHand
             //inventory.OldScrollButtons(false);
             if(axis == Axis.Horizontal)
             {
-
+                xValue = -100;
+                xIncrement = -50;
             }
             else
             {//ignore until implementing vertical
 
             }
-
+            inventory.ScrollButtons(xValue, yValue, xIncrement, yIncrement);
 //            inventory.ScrollButtons(Movement);
         }
 

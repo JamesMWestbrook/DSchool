@@ -260,13 +260,14 @@ public class Inventory : MonoBehaviour
 
             if (newItemButton.itemIndex >= 0)
             {
-                //already below minimum
-                newItemButton.item = _Items[_Items.Count - 1];
-                newItemButton.itemIndex = _Items.Count - 1;
+                newItemButton.item = _Items[newItemButton.itemIndex];
+
             }
             else
             {
-                newItemButton.item = _Items[newItemButton.itemIndex];
+                //already hit minimum
+                newItemButton.item = _Items[_Items.Count - 1];
+                newItemButton.itemIndex = _Items.Count - 1;
             }
         }
         else if (xIncrement > 0 || yIncrement > 0)
@@ -277,9 +278,6 @@ public class Inventory : MonoBehaviour
             MovedInvsButton = 0;
             ItemIndexModifier = 1;
             newItemButton = _Buttons[VisibleButton].GetComponent<InventoryItemButton>();
-            Transform transgender = _Buttons[8].GetComponent<Transform>();
-
-            LastPos = new Vector2(transgender.position.x, transgender.position.y);
             if (newItemButton.itemIndex < _Items.Count)
             {
                 newItemButton.item = _Items[newItemButton.itemIndex];
@@ -311,9 +309,6 @@ public class Inventory : MonoBehaviour
         LeanTween.moveLocal(_Buttons[MovedInvsButton], new Vector2(xValue, yValue), 0.0f);
         GameObject button = _Buttons[MovedInvsButton];
         _Buttons.RemoveAt(0);
-        Debug.Log(_Buttons.Count);
-       // ButtonsHor.RemoveAt(0);
-        Debug.Log(ButtonsHor.Count);
 
         if (xIncrement < 0 || yIncrement < 0)
         {//left or down
@@ -514,8 +509,6 @@ public class Inventory : MonoBehaviour
                 for (int i = 0; i < ButtonsHor.Count; i++)
                 {
                     ButtonsHor[i].GetComponent<InventoryItemButton>().buttonIndex = i;
-                    Debug.Log(i);
-
                 }
                 break;
             case ListType.Combat:
