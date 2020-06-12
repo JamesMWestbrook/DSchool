@@ -56,11 +56,11 @@ public class MenuActions : PlayerActionSet
         actions.KeySwitch.AddDefaultBinding(Key.CapsLock);
 
         //controller
-        actions.Left.AddDefaultBinding(InputControlType.DPadLeft);
-        actions.Right.AddDefaultBinding(InputControlType.DPadRight);
+        actions.Left.AddDefaultBinding(InputControlType.LeftStickLeft);
+        actions.Right.AddDefaultBinding(InputControlType.LeftStickRight);
+        actions.Up.AddDefaultBinding(InputControlType.LeftStickUp);
+        actions.Down.AddDefaultBinding(InputControlType.LeftStickDown);
 
-        actions.Up.AddDefaultBinding(InputControlType.DPadUp);
-        actions.Down.AddDefaultBinding(InputControlType.DPadDown);
 
         actions.Confirm.AddDefaultBinding(InputControlType.Action1);
         actions.Present.AddDefaultBinding(InputControlType.Action4);
