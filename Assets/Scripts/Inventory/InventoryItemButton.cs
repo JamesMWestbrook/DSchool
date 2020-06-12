@@ -21,7 +21,14 @@ public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHand
     public int buttonIndex;
     public int itemIndex;
     public int VisibleIndex;
+    public Axis axis;
+    private Vector2 Movement;
 
+    public enum Axis
+    {
+        Vertical,
+        Horizontal
+    }
     public void Awake()
     {
         inventory = GetComponentInParent(typeof(Inventory)) as Inventory;
@@ -43,15 +50,37 @@ public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHand
     {
         LeanTween.scale(gameObject, new Vector3(1.2f, 1.2f, 1.2f), 0.1f);
         inventory.SetButton(buttonIndex);
-        if (buttonIndex == 0 && inventory.Items.Count >= 8)
+        if (buttonIndex == 0 && inventory.Items.Count >= 8)//moving left/down
         {
-            inventory.ScrollButtons(false);
-        }
-        else if(buttonIndex == 8 && inventory.Items.Count >= 8)
-        {
-            inventory.ScrollButtons();
+            //inventory.OldScrollButtons(false);
+            if(axis == Axis.Horizontal)
+            {
 
+            }
+            else
+            {//ignore until implementing vertical
+
+            }
+
+            inventory.ScrollButtons(Movement);
         }
+
+        else if(buttonIndex == 8 && inventory.Items.Count >= 8)//moving right/up
+        {
+            // inventory.OldScrollButtons();
+            if (axis == Axis.Horizontal)
+            {
+                Movement = new Vector2(-50, 0f);
+                Debug.Log("Works");
+            }
+            else
+            {//ignore until implementing vertical
+
+            }
+            inventory.ScrollButtons(Movement);
+        }
+
+        
     }
     public void OnDeselect(BaseEventData eventData)
     {

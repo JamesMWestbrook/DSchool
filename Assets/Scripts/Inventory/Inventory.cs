@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TreeEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -11,7 +12,7 @@ using UnityEngine.UI;
 public class Inventory : MonoBehaviour
 {
     public bool InMenu;
-   [HideInInspector] public static Inventory instance;
+    [HideInInspector] public static Inventory instance;
     [SerializeField] private GameObject InvButton;
     public Image HorizontalPanel;
     public Image CenterPoint;
@@ -59,7 +60,7 @@ public class Inventory : MonoBehaviour
     {
         if (InMenu)
         {
-            if(EventSystem.current.currentSelectedGameObject != null)
+            if (EventSystem.current.currentSelectedGameObject != null)
             {
                 CurrentlySelected = EventSystem.current.currentSelectedGameObject;
             }
@@ -210,7 +211,117 @@ public class Inventory : MonoBehaviour
         FGtarget.a = EndOpacity;
         LeanTween.value(FG.gameObject, (Color x) => FG.color = x, FG.color, FGtarget, 0.5f);
     }
-    public void ScrollButtons(bool Right = true)
+
+
+
+
+    public void ScrollButtons(Vector2 Movement)
+    {
+        List<GameObject> _Buttons = new List<GameObject>();
+        List<Item> _Items = new List<Item>();
+
+
+        switch (currentMenu)
+        {
+            case ListType.Items:
+                _Buttons = ButtonsHor;
+                _Items = Items;
+                break;
+            case ListType.Combat:
+                break;
+            case ListType.KeyItems:
+                _Buttons = ButtonsHor;
+                _Items = KeyItems;
+                break;
+        }
+
+
+        int VisibleButton = 0;
+        int MovedInvsButton = 0;
+        int ItemIndexModifier = 0;
+        InventoryItemButton newItemButton = new InventoryItemButton();
+        if (Movement.x > 0 || Movement.y > 0)
+        {
+            VisibleButton = 0;
+            MovedInvsButton = 8;
+            ItemIndexModifier = -1;
+            newItemButton = _Buttons[VisibleButton].GetComponent<InventoryItemButton>();
+
+            if (newItemButton.itemIndex >= 0)
+            {
+                //already below minimum
+                newItemButton.item = _Items[_Items.Count - 1];
+                newItemButton.itemIndex = _Items.Count - 1;
+            }
+            else
+            {
+                newItemButton.item = _Items[newItemButton.itemIndex];
+            }
+        }
+        else if (Movement.x < 0 || Movement.y < 0)
+        {
+            //Moving from right to left(you're on right side)
+            //Or moving from Up to down(You're on top side)
+            VisibleButton = 8;
+            MovedInvsButton = 0;
+            ItemIndexModifier = 1;
+            newItemButton = _Buttons[VisibleButton].GetComponent<InventoryItemButton>();
+
+            if (newItemButton.itemIndex < _Items.Count)
+            {
+                newItemButton.item = _Items[newItemButton.itemIndex];
+            }
+            else
+            {
+                //already passed max
+                newItemButton.item = _Items[0];
+                newItemButton.itemIndex = 0;
+            }
+        }
+        newItemButton.SetGraphic();
+
+        StartCoroutine(LockInputTimer(0.3f));
+        StartCoroutine(LockButtons(_Buttons));
+        for (int i = 0; i < _Buttons.Count; i++)
+        {
+            if (i == MovedInvsButton) continue;
+            if (i == VisibleButton) ButtonOpacity(_Buttons[i], 1f);
+
+            Transform transgender = _Buttons[i].GetComponent<Transform>(); //c# would not let me have trans in this scope, and trans in the next. So I got petty.
+            Vector2 NewPosition = new Vector2(transgender.position.x, transgender.position.y);
+            NewPosition = new Vector2(NewPosition.x += Movement.x, NewPosition.y += Movement.y);
+            LeanTween.move(_Buttons[i], NewPosition, 0.3f);
+
+        }
+
+        ButtonOpacity(_Buttons[MovedInvsButton], 0f);
+        Transform trans = _Buttons[VisibleButton].GetComponent<Transform>();
+        Vector2 NewPos = new Vector2(trans.position.x, trans.position.y);
+
+        LeanTween.move(_Buttons[MovedInvsButton], new Vector2(NewPos.x += Movement.x * -1, NewPos.y += Movement.y * -1), 0.0f);
+        //LeanTween.move(_Buttons[MovedInvsButton], new Vector2(NewPos.x, NewPos.y), 0.0f);
+        GameObject button = _Buttons[MovedInvsButton];
+        _Buttons.Remove(button);
+        if (Movement.x > 0 || Movement.y > 0)
+        {//left or down
+            _Buttons.Insert(0, button);
+        }
+        else
+        {
+            _Buttons.Add(button);
+        }
+
+        InventoryItemButton movedButton = _Buttons[VisibleButton].GetComponent<InventoryItemButton>();
+        movedButton.item = null;
+        movedButton.SetGraphic();
+        movedButton.itemIndex = newItemButton.itemIndex + ItemIndexModifier;
+        RedoButtonIndex();
+
+        ButtonOpacity(_Buttons[MovedInvsButton], 0f);
+    }
+
+
+    public void OldScrollButtons(bool Right = true)
     {
         StartCoroutine(LockInputTimer(0.3f));
         List<GameObject> Buttons = new List<GameObject>();
@@ -258,10 +369,7 @@ public class Inventory : MonoBehaviour
                 if (Horizontal)
                 {
                     if (i == 0) continue;
-                    if(i == 8)
-                    {
-                        ButtonOpacity(Buttons[i], 1f);
-                    }
+                    if (i == 8) ButtonOpacity(Buttons[i], 1f);
                     LeanTween.moveLocalX(Buttons[i], q, 0.3f);
                     q += 50;
                 }
@@ -274,9 +382,9 @@ public class Inventory : MonoBehaviour
 
             if (Horizontal)
             {
-                
+
                 InventoryItemButton newItemButton = Buttons[8].GetComponent<InventoryItemButton>();
-                if(newItemButton.itemIndex < items.Count)
+                if (newItemButton.itemIndex < items.Count)
                 {
                     newItemButton.item = items[newItemButton.itemIndex];
 
@@ -287,7 +395,10 @@ public class Inventory : MonoBehaviour
                     newItemButton.itemIndex = 0;
                 }
                 newItemButton.SetGraphic();
-                
+
+
+
+                ButtonOpacity(Buttons[0], 0f);//both this and the following opacity change for Buttons[0] is necessary don't remove either
                 LeanTween.moveLocalX(Buttons[0], 200, 0.0f);
                 GameObject button = Buttons[0];
                 Buttons.RemoveAt(0);
@@ -297,6 +408,8 @@ public class Inventory : MonoBehaviour
                 movedButton.SetGraphic();
                 movedButton.itemIndex = newItemButton.itemIndex + 1;
                 RedoButtonIndex();
+
+                ButtonOpacity(Buttons[0], 0f);
             }
             else
             {
@@ -324,7 +437,7 @@ public class Inventory : MonoBehaviour
             if (Horizontal)
             {
                 InventoryItemButton newItemButton = Buttons[0].GetComponent<InventoryItemButton>();
-                if(newItemButton.itemIndex >= 0)
+                if (newItemButton.itemIndex >= 0)
                 {
                     newItemButton.item = items[newItemButton.itemIndex];
 
@@ -348,6 +461,7 @@ public class Inventory : MonoBehaviour
                 RedoButtonIndex();
 
 
+
             }
             else
             {
@@ -355,7 +469,7 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        foreach(GameObject button in Buttons)
+        foreach (GameObject button in Buttons)
         {
 
         }
@@ -379,7 +493,7 @@ public class Inventory : MonoBehaviour
         switch (currentMenu)
         {
             case ListType.Items:
-                for(int i = 0; i < ButtonsHor.Count; i++)
+                for (int i = 0; i < ButtonsHor.Count; i++)
                 {
                     ButtonsHor[i].GetComponent<InventoryItemButton>().buttonIndex = i;
                 }
@@ -388,9 +502,8 @@ public class Inventory : MonoBehaviour
 
                 break;
         }
-
     }
-        public void SetButton(int newInt)
+    public void SetButton(int newInt)
     {
         if (currentMenu == ListType.Combat)
         {
@@ -402,5 +515,5 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    
+
 }
