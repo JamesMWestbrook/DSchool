@@ -22,7 +22,9 @@ public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHand
     public int itemIndex;
     public int VisibleIndex;
     public Axis axis;
-    private Vector2 Movement;
+    private float StartPos;
+    private float xIncrement;
+    private float yIncrement;
 
     public enum Axis
     {
@@ -62,7 +64,7 @@ public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHand
 
             }
 
-            inventory.ScrollButtons(Movement);
+//            inventory.ScrollButtons(Movement);
         }
 
         else if(buttonIndex == 8 && inventory.Items.Count >= 8)//moving right/up
@@ -70,14 +72,15 @@ public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHand
             // inventory.OldScrollButtons();
             if (axis == Axis.Horizontal)
             {
-                Movement = new Vector2(-50, 0f);
+                StartPos = -200;
+                xIncrement  = -50;
                 Debug.Log("Works");
             }
             else
             {//ignore until implementing vertical
 
             }
-            inventory.ScrollButtons(Movement);
+            inventory.ScrollButtons(StartPos, xIncrement, yIncrement);
         }
 
         

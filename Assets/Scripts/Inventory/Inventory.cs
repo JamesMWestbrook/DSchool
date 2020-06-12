@@ -169,6 +169,7 @@ public class Inventory : MonoBehaviour
             }
 
             Button.transform.position = CenterPoint.transform.position;
+          //  if (Horizontal) LeanTween.moveLocalX(Button.gameObject, q, 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
             if (Horizontal) LeanTween.moveLocalX(Button.gameObject, q, 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
             else LeanTween.moveLocalY(Button.gameObject, q, 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
             //LeanTween.move(Button.gameObject, new Vector2(xMovement, yMovement), 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
@@ -215,11 +216,11 @@ public class Inventory : MonoBehaviour
 
 
 
-    public void ScrollButtons(Vector2 Movement)
+    public void ScrollButtons(float StartPos, float xIncrement, float yIncrement)
     {
         List<GameObject> _Buttons = new List<GameObject>();
         List<Item> _Items = new List<Item>();
-
+        Vector2 LastPos = new Vector2();
 
         switch (currentMenu)
         {
@@ -240,7 +241,7 @@ public class Inventory : MonoBehaviour
         int MovedInvsButton = 0;
         int ItemIndexModifier = 0;
         InventoryItemButton newItemButton = new InventoryItemButton();
-        if (Movement.x > 0 || Movement.y > 0)
+        if (xIncrement > 0 || yIncrement > 0)
         {
             VisibleButton = 0;
             MovedInvsButton = 8;
@@ -258,7 +259,7 @@ public class Inventory : MonoBehaviour
                 newItemButton.item = _Items[newItemButton.itemIndex];
             }
         }
-        else if (Movement.x < 0 || Movement.y < 0)
+        else if (xIncrement < 0 || yIncrement < 0)
         {
             //Moving from right to left(you're on right side)
             //Or moving from Up to down(You're on top side)
@@ -266,7 +267,9 @@ public class Inventory : MonoBehaviour
             MovedInvsButton = 0;
             ItemIndexModifier = 1;
             newItemButton = _Buttons[VisibleButton].GetComponent<InventoryItemButton>();
+            Transform transgender = _Buttons[8].GetComponent<Transform>();
 
+            LastPos = new Vector2(transgender.position.x, transgender.position.y);
             if (newItemButton.itemIndex < _Items.Count)
             {
                 newItemButton.item = _Items[newItemButton.itemIndex];
@@ -287,22 +290,27 @@ public class Inventory : MonoBehaviour
             if (i == MovedInvsButton) continue;
             if (i == VisibleButton) ButtonOpacity(_Buttons[i], 1f);
 
-            Transform transgender = _Buttons[i].GetComponent<Transform>(); //c# would not let me have trans in this scope, and trans in the next. So I got petty.
+            Transform transgender = _Buttons[i].GetComponent<RectTransform>(); //c# would not let me have trans in this scope, and trans in the next. So I got petty.
+            Debug.Log(transgender.position);
+
             Vector2 NewPosition = new Vector2(transgender.position.x, transgender.position.y);
-            NewPosition = new Vector2(NewPosition.x += Movement.x, NewPosition.y += Movement.y);
+
+
+
+
+            NewPosition = new Vector2(NewPosition.x += xIncrement, NewPosition.y += yIncrement);
             LeanTween.move(_Buttons[i], NewPosition, 0.3f);
 
         }
 
         ButtonOpacity(_Buttons[MovedInvsButton], 0f);
-        Transform trans = _Buttons[VisibleButton].GetComponent<Transform>();
-        Vector2 NewPos = new Vector2(trans.position.x, trans.position.y);
-
-        LeanTween.move(_Buttons[MovedInvsButton], new Vector2(NewPos.x += Movement.x * -1, NewPos.y += Movement.y * -1), 0.0f);
+        // Transform trans = _Buttons[VisibleButton].GetComponent<Transform>();
+        //Vector2 NewPos = new Vector2(trans.position.x, trans.position.y);
+        LeanTween.move(_Buttons[MovedInvsButton], LastPos, 0.0f);
         //LeanTween.move(_Buttons[MovedInvsButton], new Vector2(NewPos.x, NewPos.y), 0.0f);
         GameObject button = _Buttons[MovedInvsButton];
         _Buttons.Remove(button);
-        if (Movement.x > 0 || Movement.y > 0)
+        if (xIncrement > 0 || yIncrement > 0)
         {//left or down
             _Buttons.Insert(0, button);
         }
