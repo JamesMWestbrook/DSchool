@@ -22,7 +22,8 @@ public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHand
     public int itemIndex;
     public int VisibleIndex;
     public Axis axis;
-    private float StartPos;
+    private float xValue;
+    private float yValue;
     private float xIncrement;
     private float yIncrement;
 
@@ -72,15 +73,14 @@ public class InventoryItemButton : MonoBehaviour , ISelectHandler, IDeselectHand
             // inventory.OldScrollButtons();
             if (axis == Axis.Horizontal)
             {
-                StartPos = -200;
-                xIncrement  = -50;
-                Debug.Log("Works");
+                xValue = -200;
+                xIncrement  = 50;
             }
             else
             {//ignore until implementing vertical
 
             }
-            inventory.ScrollButtons(StartPos, xIncrement, yIncrement);
+            inventory.ScrollButtons(xValue, yValue,xIncrement, yIncrement);
         }
 
         
@@ -118,6 +118,9 @@ public class InvButtonEditor : Editor
 
         SerializedProperty image = serializedObject.FindProperty("image");
         EditorGUILayout.PropertyField(image);
+        
+        SerializedProperty buttonIndex = serializedObject.FindProperty("buttonIndex");
+        EditorGUILayout.PropertyField(buttonIndex);
 
         SerializedProperty index = serializedObject.FindProperty("itemIndex");
         EditorGUILayout.PropertyField(index);

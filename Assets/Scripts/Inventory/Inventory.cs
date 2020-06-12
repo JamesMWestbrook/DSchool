@@ -55,6 +55,10 @@ public class Inventory : MonoBehaviour
         HorizontalPanel.gameObject.SetActive(false);
         actions = MenuActions.CreateWithAllBindings();
     }
+    void PrintBitch()
+    {
+        Debug.Log("Bitch");
+    }
     private GameObject CurrentlySelected;
     void Update()
     {
@@ -199,6 +203,8 @@ public class Inventory : MonoBehaviour
 
         Buttons[index].GetComponent<Button>().Select();
         Buttons[index].GetComponent<InventoryItemButton>().OnSelect(null);
+       // StartCoroutine(DelayedFunction(RedoButtonIndex, 0.5f));
+
     }
     public void ButtonOpacity(GameObject button, float EndOpacity)
     {
@@ -216,7 +222,7 @@ public class Inventory : MonoBehaviour
 
 
 
-    public void ScrollButtons(float StartPos, float xIncrement, float yIncrement)
+    public void ScrollButtons(float xValue, float yValue, float xIncrement, float yIncrement)
     {
         List<GameObject> _Buttons = new List<GameObject>();
         List<Item> _Items = new List<Item>();
@@ -241,7 +247,11 @@ public class Inventory : MonoBehaviour
         int MovedInvsButton = 0;
         int ItemIndexModifier = 0;
         InventoryItemButton newItemButton = new InventoryItemButton();
-        if (xIncrement > 0 || yIncrement > 0)
+
+
+            
+
+        if (xIncrement < 0 || yIncrement < 0)
         {
             VisibleButton = 0;
             MovedInvsButton = 8;
@@ -259,7 +269,7 @@ public class Inventory : MonoBehaviour
                 newItemButton.item = _Items[newItemButton.itemIndex];
             }
         }
-        else if (xIncrement < 0 || yIncrement < 0)
+        else if (xIncrement > 0 || yIncrement > 0)
         {
             //Moving from right to left(you're on right side)
             //Or moving from Up to down(You're on top side)
@@ -290,27 +300,22 @@ public class Inventory : MonoBehaviour
             if (i == MovedInvsButton) continue;
             if (i == VisibleButton) ButtonOpacity(_Buttons[i], 1f);
 
-            Transform transgender = _Buttons[i].GetComponent<RectTransform>(); //c# would not let me have trans in this scope, and trans in the next. So I got petty.
-            Debug.Log(transgender.position);
-
-            Vector2 NewPosition = new Vector2(transgender.position.x, transgender.position.y);
-
-
-
-
-            NewPosition = new Vector2(NewPosition.x += xIncrement, NewPosition.y += yIncrement);
-            LeanTween.move(_Buttons[i], NewPosition, 0.3f);
+            LeanTween.moveLocal(_Buttons[i], new Vector2(xValue, yValue),0.3f);
+            xValue += xIncrement;
+            yValue += yIncrement;
 
         }
 
         ButtonOpacity(_Buttons[MovedInvsButton], 0f);
-        // Transform trans = _Buttons[VisibleButton].GetComponent<Transform>();
-        //Vector2 NewPos = new Vector2(trans.position.x, trans.position.y);
-        LeanTween.move(_Buttons[MovedInvsButton], LastPos, 0.0f);
-        //LeanTween.move(_Buttons[MovedInvsButton], new Vector2(NewPos.x, NewPos.y), 0.0f);
+//        LeanTween.move(_Buttons[MovedInvsButton], LastPos, 0.0f);
+        LeanTween.moveLocal(_Buttons[MovedInvsButton], new Vector2(xValue, yValue), 0.0f);
         GameObject button = _Buttons[MovedInvsButton];
-        _Buttons.Remove(button);
-        if (xIncrement > 0 || yIncrement > 0)
+        _Buttons.RemoveAt(0);
+        Debug.Log(_Buttons.Count);
+       // ButtonsHor.RemoveAt(0);
+        Debug.Log(ButtonsHor.Count);
+
+        if (xIncrement < 0 || yIncrement < 0)
         {//left or down
             _Buttons.Insert(0, button);
         }
@@ -323,11 +328,16 @@ public class Inventory : MonoBehaviour
         movedButton.item = null;
         movedButton.SetGraphic();
         movedButton.itemIndex = newItemButton.itemIndex + ItemIndexModifier;
-        RedoButtonIndex();
+        //RedoButtonIndex();
+        StartCoroutine(DelayedFunction(RedoButtonIndex, 0.4f));
 
         ButtonOpacity(_Buttons[MovedInvsButton], 0f);
     }
-
+    public IEnumerator DelayedFunction(Action bitch, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        bitch();
+    }
 
     public void OldScrollButtons(bool Right = true)
     {
@@ -504,12 +514,15 @@ public class Inventory : MonoBehaviour
                 for (int i = 0; i < ButtonsHor.Count; i++)
                 {
                     ButtonsHor[i].GetComponent<InventoryItemButton>().buttonIndex = i;
+                    Debug.Log(i);
+
                 }
                 break;
             case ListType.Combat:
 
                 break;
         }
+
     }
     public void SetButton(int newInt)
     {
