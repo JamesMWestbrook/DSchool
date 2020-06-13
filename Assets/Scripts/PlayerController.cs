@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("Running", false);
 
             Inventory.instance.OpenInventory();
+            Inventory.instance.playerController = this;
         }
         if (playerActions.Run.WasPressed)
         {

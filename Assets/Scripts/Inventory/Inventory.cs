@@ -14,6 +14,7 @@ public class Inventory : MonoBehaviour
 {
     public bool InMenu;
     [HideInInspector] public static Inventory instance;
+    [HideInInspector] public PlayerController playerController;
     [SerializeField] private GameObject InvButton;
     public TextMeshProUGUI ItemName;
     public TextMeshProUGUI MenuName;
@@ -118,19 +119,10 @@ public class Inventory : MonoBehaviour
                     break;
             }
         }
-        else if (actions.KeySwitch.WasPressed)
+        else if (actions.CloseInventory.WasPressed)
         {
-            if (currentMenu == ListType.Items)
-            {
-                CreateButtons(ListType.KeyItems);
-                StartCoroutine(LockInputTimer(0.3f));
-            }
-            else if (currentMenu == ListType.KeyItems)
-            {
-                CreateButtons(ListType.Items);
-                StartCoroutine(LockInputTimer(0.3f));
-            }
-
+            CloseInventory();
+            
         }
     }
 
@@ -152,11 +144,17 @@ public class Inventory : MonoBehaviour
         HorizontalPanel.transform.localScale = new Vector3(0, 0, 0);
         LeanTween.scale(HorizontalPanel.gameObject, new Vector3(1, 1, 1), 0.3f).setEase(LeanTweenType.easeOutQuad);
     }
-
+    public void CloseInventory()
+    {
+        InMenu = false;
+        LeanTween.scale(HorizontalPanel.gameObject, new Vector3(0, 0, 0), 0.3f).setEase(LeanTweenType.easeOutQuad);
+        playerController.InControl = true;
+    }
     public void CreateButtons(ListType listType, bool Horizontal = true)
     {
         List<GameObject> Buttons = new List<GameObject>();
         List<Item> _Items = new List<Item>();
+        Buttons = ButtonsHor;
 
         switch (listType)
         {
@@ -168,7 +166,7 @@ public class Inventory : MonoBehaviour
                 break;
             case ListType.Combat:
                 MenuName.text = "Weapons";
-
+                _Items = CombatItems;
                 currentMenu = ListType.Combat;
                 break;
             case ListType.KeyItems:

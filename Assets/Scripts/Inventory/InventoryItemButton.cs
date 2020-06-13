@@ -18,7 +18,7 @@ public class InventoryItemButton : MonoBehaviour, ISelectHandler, IDeselectHandl
     public Axis axis;
     public Vector2 moveValue;
     public Vector2 incrementValue;
-
+    public ItemType itemType;
     public enum ItemType
     {
         Usable,

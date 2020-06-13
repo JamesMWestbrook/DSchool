@@ -2792,15 +2792,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 80482c99fb404f942a5ad579a1fb3920, type: 2}
   - {fileID: 11400000, guid: 80482c99fb404f942a5ad579a1fb3920, type: 2}
   CombatItems:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 80482c99fb404f942a5ad579a1fb3920, type: 2}
+  - {fileID: 11400000, guid: 80482c99fb404f942a5ad579a1fb3920, type: 2}
+  - {fileID: 11400000, guid: 80482c99fb404f942a5ad579a1fb3920, type: 2}
+  - {fileID: 11400000, guid: 80482c99fb404f942a5ad579a1fb3920, type: 2}
+  - {fileID: 11400000, guid: 80482c99fb404f942a5ad579a1fb3920, type: 2}
   KeyItems:
   - {fileID: 11400000, guid: 5c5a211fee9776b4cad65535964036f0, type: 2}
   - {fileID: 11400000, guid: 80482c99fb404f942a5ad579a1fb3920, type: 2}
