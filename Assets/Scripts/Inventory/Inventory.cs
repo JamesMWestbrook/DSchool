@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using TreeEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -14,6 +15,8 @@ public class Inventory : MonoBehaviour
     public bool InMenu;
     [HideInInspector] public static Inventory instance;
     [SerializeField] private GameObject InvButton;
+    public TextMeshProUGUI ItemName;
+    public TextMeshProUGUI MenuName;
     public Image HorizontalPanel;
     public Image CenterPoint;
     public List<GameObject> ButtonsHor;
@@ -25,10 +28,9 @@ public class Inventory : MonoBehaviour
     public int CurrentButton;
     // Start is called before the first frame update
     public MenuActions actions;
-
+    
 
     public bool LockedInput;
-    bool OpenedItems;
     bool OpenedWeapons;
     public int SelectedItem;
     int SelectedWeapon;
@@ -73,34 +75,59 @@ public class Inventory : MonoBehaviour
                 EventSystem.current.SetSelectedGameObject(CurrentlySelected);
             }
         }
-        if (LockedInput) return;
+        if (LockedInput || !InMenu) return;
 
-        if (actions.Horizontal.WasPressed)
-        {
-            if (currentMenu == ListType.Combat)
-            {
-                //switch to Items
-            }
-            else
-            {
-                //running this directly from the button now
-                //ScrollButtons(true);
-            }
-        }
         else if (actions.Vertical.WasPressed)
         {
+            switch (currentMenu)
+            {
+                case ListType.Items:
+                    if (actions.Up.WasPressed)
+                    {
+                        CreateButtons(ListType.Combat);
+                    }
+                    else if (
+                       actions.Down.WasPressed)
+                    {
+                        CreateButtons(ListType.KeyItems);
+                    }
 
+                    break;
+                case ListType.Combat:
+                    if (actions.Up.WasPressed)
+                    {
+                        CreateButtons(ListType.KeyItems);
+
+                    }
+                    else if (
+                       actions.Down.WasPressed)
+                    {
+                        CreateButtons(ListType.Items);
+                    }
+                    break;
+                case ListType.KeyItems:
+                    if (actions.Up.WasPressed)
+                    {
+                        CreateButtons(ListType.Items);
+                    }
+                    else if (
+                       actions.Down.WasPressed)
+                    {
+                        CreateButtons(ListType.Combat);
+                    }
+                    break;
+            }
         }
         else if (actions.KeySwitch.WasPressed)
         {
             if (currentMenu == ListType.Items)
             {
-                CreateButtons(true, ListType.KeyItems);
+                CreateButtons(ListType.KeyItems);
                 StartCoroutine(LockInputTimer(0.3f));
             }
             else if (currentMenu == ListType.KeyItems)
             {
-                CreateButtons(true, ListType.Items);
+                CreateButtons(ListType.Items);
                 StartCoroutine(LockInputTimer(0.3f));
             }
 
@@ -118,21 +145,15 @@ public class Inventory : MonoBehaviour
     {
         InMenu = true;
         StartCoroutine(LockInputTimer(0.5f));
-        if (OpenedItems)
-        {
 
-        }
-        else
-        {
-            CreateButtons(true, ListType.Items);
-        }
+        CreateButtons(ListType.Items);
+
         HorizontalPanel.gameObject.SetActive(true);
         HorizontalPanel.transform.localScale = new Vector3(0, 0, 0);
         LeanTween.scale(HorizontalPanel.gameObject, new Vector3(1, 1, 1), 0.3f).setEase(LeanTweenType.easeOutQuad);
-        OpenedItems = true;
     }
 
-    public void CreateButtons(bool Horizontal, ListType listType)
+    public void CreateButtons(ListType listType, bool Horizontal = true)
     {
         List<GameObject> Buttons = new List<GameObject>();
         List<Item> _Items = new List<Item>();
@@ -142,20 +163,24 @@ public class Inventory : MonoBehaviour
             case ListType.Items:
                 Buttons = ButtonsHor;
                 currentMenu = ListType.Items;
+                MenuName.text = "Items";
                 _Items = Items;
-                OpenedItems = true;
                 break;
             case ListType.Combat:
+                MenuName.text = "Weapons";
 
+                currentMenu = ListType.Combat;
                 break;
             case ListType.KeyItems:
+                MenuName.text = "Key Items";
+
                 Buttons = ButtonsHor;
                 _Items = KeyItems;
                 currentMenu = ListType.KeyItems;
-                OpenedItems = false;
-
                 break;
         }
+        //LeanTween.value(FG.gameObject, (Color x) => FG.color = x, FG.color, FGtarget, duration);
+        LeanTween.value(MenuName.gameObject, (float x) => MenuName.maxVisibleCharacters = (int)x, 0, MenuName.text.Length, 0.3f);
 
         int q = -150;
         int t = 0;
@@ -173,14 +198,14 @@ public class Inventory : MonoBehaviour
             {
                 Button.item = null;
                 Button.SetGraphic();
-               
+
 
                 if (_Items.Count < 8)
                 {
                     Buttons[i].SetActive(false);
                 }
 
-                if(i >= _Items.Count && _Items.Count < 8 && StopContinueOnce)
+                if (i >= _Items.Count && _Items.Count < 8 && StopContinueOnce)
                 {
                     StopContinueOnce = false;
                     Buttons[i].SetActive(true);
@@ -258,7 +283,6 @@ public class Inventory : MonoBehaviour
     {
         List<GameObject> _Buttons = new List<GameObject>();
         List<Item> _Items = new List<Item>();
-        Vector2 LastPos = new Vector2();
 
         switch (currentMenu)
         {
@@ -322,13 +346,14 @@ public class Inventory : MonoBehaviour
 
         }
 
-    //    ButtonOpacity(_Buttons[MovedInvsButton], 0f);
+        //    ButtonOpacity(_Buttons[MovedInvsButton], 0f);
         LeanTween.moveLocal(_Buttons[MovedInvsButton], InvsDestination, 0.0f);
-       // LeanTween.moveLocal(_Buttons[MovedInvsButton], new Vector2(moveValue.x, moveValue.y), 0.0f);
+        // LeanTween.moveLocal(_Buttons[MovedInvsButton], new Vector2(moveValue.x, moveValue.y), 0.0f);
         GameObject button = _Buttons[MovedInvsButton];
         //_Buttons.RemoveAt(0);
         _Buttons.RemoveAt(MovedInvsButton);
-        if (VisibleButton == 8){ //Right
+        if (VisibleButton == 8)
+        { //Right
             _Buttons.Add(button);
         }
         else
@@ -546,5 +571,8 @@ public class Inventory : MonoBehaviour
         }
     }
 
-
+    public IEnumerator Bitch(TextMeshProUGUI text, string name, float duration = 0.3f)
+    {
+        yield return new WaitForSeconds(3) ;
+    }
 }

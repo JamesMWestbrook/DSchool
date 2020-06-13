@@ -5,17 +5,11 @@ using UnityEditor;
 using QFSW.BA.QGUI;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class InventoryItemButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
-    [SerializeField] Inventory inventory;
-    public ItemType itemType;
-    public enum ItemType
-    {
-        Usable,
-        Key,
-        Combat
-    }
+    private Inventory inventory;
     public Item item;
     public Image image;
     public int buttonIndex;
@@ -24,6 +18,13 @@ public class InventoryItemButton : MonoBehaviour, ISelectHandler, IDeselectHandl
     public Axis axis;
     public Vector2 moveValue;
     public Vector2 incrementValue;
+
+    public enum ItemType
+    {
+        Usable,
+        Key,
+        Combat
+    }
 
     public enum Axis
     {
@@ -49,36 +50,29 @@ public class InventoryItemButton : MonoBehaviour, ISelectHandler, IDeselectHandl
 
     public void OnSelect(BaseEventData eventData)
     {
+        inventory.ItemName.text = item.Name;
+        TextMeshProUGUI text = inventory.ItemName;
+        LeanTween.value(text.gameObject, (float x) => text.maxVisibleCharacters = (int)x, 0, text.text.Length, 0.3f);
+
+
         LeanTween.scale(gameObject, new Vector3(1.2f, 1.2f, 1.2f), 0.1f);
         inventory.SetButton(buttonIndex);
         if (buttonIndex == 0 && inventory.Items.Count >= 8)//moving left/down
         {
-            //inventory.OldScrollButtons(false);
-            if (axis == Axis.Horizontal)
-            {
+            
                 moveValue.x = -150;
                 incrementValue.x = 50;
-            }
-            else
-            {//ignore until implementing vertical
-
-            }                       //1     2       3           4           5  6  7
+                             //1     2       3           4           5  6  7
             inventory.ScrollButtons(moveValue, incrementValue, 0, 8, -1, new Vector2(-200,0));
             //            inventory.ScrollButtons(Movement);
         }
 
         else if (buttonIndex == 8 && inventory.Items.Count >= 8)//moving right/up
         {
-            // inventory.OldScrollButtons();
-            if (axis == Axis.Horizontal)
-            {
+            
                 moveValue.x = -200;
                 incrementValue.x = 50;
-            }
-            else
-            {//ignore until implementing vertical
-
-            }
+           
             inventory.ScrollButtons(moveValue, incrementValue, 8, 0, 1, new Vector2(200, 0));
         }
 
