@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 
@@ -29,8 +28,3 @@ public class Item : ScriptableObject
 }
 
 
-[CustomEditor(typeof(Item))]
-public class ItemEditor : Editor
-{ 
-
-}

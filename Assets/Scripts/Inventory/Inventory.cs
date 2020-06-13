@@ -1,9 +1,7 @@
-﻿using Newtonsoft.Json.Bson;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using TreeEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -13,6 +11,7 @@ using UnityEngine.UI;
 public class Inventory : MonoBehaviour
 {
     public bool InMenu;
+    
     [HideInInspector] public static Inventory instance;
     [HideInInspector] public PlayerController playerController;
     [SerializeField] private GameObject InvButton;
@@ -146,10 +145,16 @@ public class Inventory : MonoBehaviour
     }
     public void CloseInventory()
     {
-        InMenu = false;
         LeanTween.scale(HorizontalPanel.gameObject, new Vector3(0, 0, 0), 0.3f).setEase(LeanTweenType.easeOutQuad);
-        playerController.InControl = true;
+       StartCoroutine( DelayedFunction(EnableMovement, 0.3f));
     }
+    public void EnableMovement()
+    {
+        InMenu = false;
+        playerController.InControl = true;
+
+    }
+
     public void CreateButtons(ListType listType, bool Horizontal = true)
     {
         List<GameObject> Buttons = new List<GameObject>();
