@@ -216,7 +216,7 @@ public class Inventory : MonoBehaviour
                 else
                 {
                     //ButtonOpacity(Buttons[i], 0f);
-
+                    /*
                     Color BGtarget = Button.GetComponent<Image>().color;
                     BGtarget.a = 0;
                     Image BG = Button.GetComponent<Image>();
@@ -226,7 +226,7 @@ public class Inventory : MonoBehaviour
                     Color FGtarget = FG.color;
                     FGtarget.a = 0;
                     FG.color = FGtarget;
-
+                    */
                     continue;
 
                 }
@@ -234,11 +234,9 @@ public class Inventory : MonoBehaviour
             }
 
             Button.transform.position = CenterPoint.transform.position;
-            //  if (Horizontal) LeanTween.moveLocalX(Button.gameObject, q, 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
-            ButtonOpacity(Buttons[i], 1f);
+            //ButtonOpacity(Buttons[i], 1f);
             if (Horizontal) LeanTween.moveLocalX(Button.gameObject, q, 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
             else LeanTween.moveLocalY(Button.gameObject, q, 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
-            //LeanTween.move(Button.gameObject, new Vector2(xMovement, yMovement), 0.3f).setEase(LeanTweenType.easeOutQuad).setDelay(0.3f);
 
 
             if (Horizontal) q += 50;
@@ -266,7 +264,6 @@ public class Inventory : MonoBehaviour
 
         Buttons[index].GetComponent<Button>().Select();
         Buttons[index].GetComponent<InventoryItemButton>().OnSelect(null);
-        // StartCoroutine(DelayedFunction(RedoButtonIndex, 0.5f));
 
     }
     public void ButtonOpacity(GameObject button, float EndOpacity, float duration = 0.5f)
@@ -341,7 +338,7 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < _Buttons.Count; i++)
         {
             if (i == MovedInvsButton) continue;
-            if (i == VisibleButton) ButtonOpacity(_Buttons[i], 1f);
+            //if (i == VisibleButton) ButtonOpacity(_Buttons[i], 1f);
 
             LeanTween.moveLocal(_Buttons[i], new Vector2(moveValue.x, moveValue.y), Speed);
             moveValue.x += incrementValue.x;
@@ -349,11 +346,8 @@ public class Inventory : MonoBehaviour
 
         }
 
-        //    ButtonOpacity(_Buttons[MovedInvsButton], 0f);
         LeanTween.moveLocal(_Buttons[MovedInvsButton], InvsDestination, 0.0f);
-        // LeanTween.moveLocal(_Buttons[MovedInvsButton], new Vector2(moveValue.x, moveValue.y), 0.0f);
         GameObject button = _Buttons[MovedInvsButton];
-        //_Buttons.RemoveAt(0);
         _Buttons.RemoveAt(MovedInvsButton);
         if (VisibleButton == 8)
         { //Right
@@ -368,10 +362,9 @@ public class Inventory : MonoBehaviour
         movedButton.item = null;
         movedButton.SetGraphic();
         movedButton.itemIndex = newItemButton.itemIndex + ItemIndexModifier;
-        //RedoButtonIndex();
         StartCoroutine(DelayedFunction(RedoButtonIndex, Speed + 0.001f));
 
-        ButtonOpacity(_Buttons[MovedInvsButton], 0f);
+        //ButtonOpacity(_Buttons[MovedInvsButton], 0f);
     }
     public IEnumerator DelayedFunction(Action bitch, float delay)
     {
