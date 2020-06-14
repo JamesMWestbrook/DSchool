@@ -29,7 +29,7 @@ public class Inventory : MonoBehaviour
     // Start is called before the first frame update
     public MenuActions actions;
 
-    private float Speed = 0.1f;
+    private float Speed = 0.005f;
     public bool LockedInput;
     bool OpenedWeapons;
     public int SelectedItem;
@@ -369,7 +369,7 @@ public class Inventory : MonoBehaviour
         movedButton.SetGraphic();
         movedButton.itemIndex = newItemButton.itemIndex + ItemIndexModifier;
         //RedoButtonIndex();
-        StartCoroutine(DelayedFunction(RedoButtonIndex, Speed + 0.01f));
+        StartCoroutine(DelayedFunction(RedoButtonIndex, Speed + 0.001f));
 
         ButtonOpacity(_Buttons[MovedInvsButton], 0f);
     }
