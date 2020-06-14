@@ -28,8 +28,8 @@ public class Inventory : MonoBehaviour
     public int CurrentButton;
     // Start is called before the first frame update
     public MenuActions actions;
-    
 
+    private float Speed = 0.1f;
     public bool LockedInput;
     bool OpenedWeapons;
     public int SelectedItem;
@@ -336,14 +336,14 @@ public class Inventory : MonoBehaviour
         newItemButton.SetGraphic();
 
 
-        StartCoroutine(LockInputTimer(0.3f));
+        StartCoroutine(LockInputTimer(Speed * 2));
         StartCoroutine(LockButtons(_Buttons));
         for (int i = 0; i < _Buttons.Count; i++)
         {
             if (i == MovedInvsButton) continue;
             if (i == VisibleButton) ButtonOpacity(_Buttons[i], 1f);
 
-            LeanTween.moveLocal(_Buttons[i], new Vector2(moveValue.x, moveValue.y), 0.3f);
+            LeanTween.moveLocal(_Buttons[i], new Vector2(moveValue.x, moveValue.y), Speed);
             moveValue.x += incrementValue.x;
             moveValue.y += incrementValue.y;
 
@@ -369,7 +369,7 @@ public class Inventory : MonoBehaviour
         movedButton.SetGraphic();
         movedButton.itemIndex = newItemButton.itemIndex + ItemIndexModifier;
         //RedoButtonIndex();
-        StartCoroutine(DelayedFunction(RedoButtonIndex, 0.3f));
+        StartCoroutine(DelayedFunction(RedoButtonIndex, Speed + 0.01f));
 
         ButtonOpacity(_Buttons[MovedInvsButton], 0f);
     }
@@ -379,159 +379,6 @@ public class Inventory : MonoBehaviour
         bitch();
     }
 
-    public void OldScrollButtons(bool Right = true)
-    {
-        StartCoroutine(LockInputTimer(0.3f));
-        List<GameObject> Buttons = new List<GameObject>();
-        List<Item> items = new List<Item>();
-        int index = 0;
-        bool Horizontal = false;
-        float q = -250f;
-        switch (currentMenu)
-        {
-            case ListType.Combat:
-                Horizontal = false;
-                items = CombatItems;
-                index = SelectedWeapon;
-                Buttons = ButtonsVert;
-
-                if (Right)
-                {
-
-                }
-                else
-                {
-
-                }
-                break;
-            default:
-                Horizontal = true;
-                index = SelectedItem;
-                items = Items;
-                Buttons = ButtonsHor;
-                if (Right)
-                {
-                    q = -200f;
-                }
-                else
-                {
-                    q = 200f;
-                }
-                break;
-        }
-        StartCoroutine(LockButtons(Buttons));
-        if (Right)//Right
-        {
-            for (int i = 0; i < Buttons.Count; i++)
-            {
-                if (Horizontal)
-                {
-                    if (i == 0) continue;
-                    if (i == 8) ButtonOpacity(Buttons[i], 1f);
-                    LeanTween.moveLocalX(Buttons[i], q, 0.3f);
-                    q += 50;
-                }
-                else
-                {
-
-                }
-                //  else LeanTween.moveLocalY(Buttons[i], movement, 0.3f);
-            }
-
-            if (Horizontal)
-            {
-
-                InventoryItemButton newItemButton = Buttons[8].GetComponent<InventoryItemButton>();
-                if (newItemButton.itemIndex < items.Count)
-                {
-                    newItemButton.item = items[newItemButton.itemIndex];
-
-                }
-                else //if we already hit the max
-                {
-                    newItemButton.item = items[0];
-                    newItemButton.itemIndex = 0;
-                }
-                newItemButton.SetGraphic();
-
-
-
-                ButtonOpacity(Buttons[0], 0f);//both this and the following opacity change for Buttons[0] is necessary don't remove either
-                LeanTween.moveLocalX(Buttons[0], 200, 0.0f);
-                GameObject button = Buttons[0];
-                Buttons.RemoveAt(0);
-                Buttons.Add(button);
-                InventoryItemButton movedButton = Buttons[8].GetComponent<InventoryItemButton>();
-                movedButton.item = null;
-                movedButton.SetGraphic();
-                movedButton.itemIndex = newItemButton.itemIndex + 1;
-                RedoButtonIndex();
-
-                ButtonOpacity(Buttons[0], 0f);
-            }
-            else
-            {
-
-            }
-
-        }
-        else//Left
-        {
-            for (int i = 8; i > -1; i--)
-            {
-                if (Horizontal)
-                {
-                    if (i == 8) continue;
-                    LeanTween.moveLocalX(Buttons[i], q, 0.3f);
-                    q -= 50;
-                }
-                else
-                {
-
-                }
-                //  else LeanTween.moveLocalY(Buttons[i], movement, 0.3f);
-            }
-
-            if (Horizontal)
-            {
-                InventoryItemButton newItemButton = Buttons[0].GetComponent<InventoryItemButton>();
-                if (newItemButton.itemIndex >= 0)
-                {
-                    newItemButton.item = items[newItemButton.itemIndex];
-
-                }
-                else //if we already hit the minimum
-                {
-                    int maxItem = items.Count - 1;
-                    newItemButton.item = items[maxItem];
-                    newItemButton.itemIndex = maxItem;
-                }
-                newItemButton.SetGraphic();
-
-                LeanTween.moveLocalX(Buttons[8], -200, 0.0f);
-                GameObject button = Buttons[8];
-                Buttons.RemoveAt(8);
-                Buttons.Insert(0, button);
-                InventoryItemButton movedButton = Buttons[0].GetComponent<InventoryItemButton>();
-                movedButton.item = null;
-                movedButton.SetGraphic();
-                movedButton.itemIndex = newItemButton.itemIndex - 1;
-                RedoButtonIndex();
-
-
-
-            }
-            else
-            {
-
-            }
-        }
-
-        foreach (GameObject button in Buttons)
-        {
-
-        }
-    }
 
     public IEnumerator LockButtons(List<GameObject> Buttons)
     {
