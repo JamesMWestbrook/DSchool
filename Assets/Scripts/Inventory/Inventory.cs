@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -59,12 +60,12 @@ public class Inventory : MonoBehaviour
     }
     void PrintBitch()
     {
-        Debug.Log("Bitch");
+        UnityEngine.Debug.Log("Bitch");
     }
     private GameObject CurrentlySelected;
     void Update()
     {
-        if (InMenu)
+        if (InMenu && !LockedInput)
         {
             if (EventSystem.current.currentSelectedGameObject != null)
             {
@@ -138,13 +139,14 @@ public class Inventory : MonoBehaviour
         StartCoroutine(LockInputTimer(0.5f));
 
         CreateButtons(ListType.Items);
-
+        LockButtons(ButtonsHor);
         HorizontalPanel.gameObject.SetActive(true);
         HorizontalPanel.transform.localScale = new Vector3(0, 0, 0);
         LeanTween.scale(HorizontalPanel.gameObject, new Vector3(1, 1, 1), 0.3f).setEase(LeanTweenType.easeOutQuad);
     }
     public void CloseInventory()
     {
+        EventSystem.current.SetSelectedGameObject(null);
         LeanTween.scale(HorizontalPanel.gameObject, new Vector3(0, 0, 0), 0.3f).setEase(LeanTweenType.easeOutQuad);
        StartCoroutine( DelayedFunction(EnableMovement, 0.3f));
     }
@@ -157,6 +159,9 @@ public class Inventory : MonoBehaviour
 
     public void CreateButtons(ListType listType, bool Horizontal = true)
     {
+        EventSystem.current.SetSelectedGameObject(null);
+
+
         List<GameObject> Buttons = new List<GameObject>();
         List<Item> _Items = new List<Item>();
         Buttons = ButtonsHor;
@@ -245,7 +250,7 @@ public class Inventory : MonoBehaviour
             Button.itemIndex = t;
             t++;
             Button.SetGraphic();
-            if (i < 6)
+            if (i < 5)
             {
                 index++;
             }
@@ -262,8 +267,10 @@ public class Inventory : MonoBehaviour
 
         }
 
-        Buttons[index].GetComponent<Button>().Select();
-        Buttons[index].GetComponent<InventoryItemButton>().OnSelect(null);
+       StartCoroutine( DelayedFunction(Buttons[index].GetComponent<Button>().Select, 0.4f));
+        //StartCoroutine( DelayedFunction(Buttons[index].GetComponent<InventoryItemButton>().OnSelect(null), 0.3f));
+        //Buttons[index].GetComponent<Button>().Select();
+       //Buttons[index].GetComponent<InventoryItemButton>().OnSelect(null);
 
     }
     public void ButtonOpacity(GameObject button, float EndOpacity, float duration = 0.5f)
