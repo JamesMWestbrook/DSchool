@@ -7,6 +7,7 @@ using TMPro;
 
 public class InventoryItemButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
+    private Button button;
     private Inventory inventory;
     public Item item;
     public Image image;
@@ -32,6 +33,7 @@ public class InventoryItemButton : MonoBehaviour, ISelectHandler, IDeselectHandl
     public void Awake()
     {
         inventory = GetComponentInParent(typeof(Inventory)) as Inventory;
+        button = GetComponent<Button>();
     }
     public void SetGraphic()
     {
@@ -50,7 +52,11 @@ public class InventoryItemButton : MonoBehaviour, ISelectHandler, IDeselectHandl
     {
 
 
-        LeanTween.scale(gameObject, new Vector3(1.2f, 1.2f, 1.2f), 0.1f);
+        LeanTween.scale(gameObject, new Vector3(1.1f, 1.1f, 1.1f), 0.1f);
+
+        ColorBlock col = button.colors;
+        col.colorMultiplier = 5;
+        button.colors = col;
 
         if (buttonIndex == 0 && inventory.Items.Count >= 8)//moving left/down
         {
@@ -79,5 +85,8 @@ public class InventoryItemButton : MonoBehaviour, ISelectHandler, IDeselectHandl
     public void OnDeselect(BaseEventData eventData)
     {
         LeanTween.scale(gameObject, new Vector3(1f, 1f, 1f), 0.1f);
+        ColorBlock col = button.colors;
+        col.colorMultiplier = 1;
+        button.colors = col;
     }
 }
