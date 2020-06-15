@@ -43,9 +43,10 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("Moving", false);
             anim.SetBool("Backwards", false);
             anim.SetBool("Running", false);
-
+            movementState = MovementState.Still;
             Inventory.instance.OpenInventory();
             Inventory.instance.playerController = this;
+            return;
         }
         if (playerActions.Run.WasPressed)
         {
@@ -168,7 +169,6 @@ public class PlayerController : MonoBehaviour
     }
     private float SpeedPenalty;
     private float SpeedBonus = 1;
-
     public float GetSpeed(bool Forward = true)
     {
 
