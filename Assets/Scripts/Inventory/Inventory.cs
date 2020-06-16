@@ -80,6 +80,7 @@ public class Inventory : MonoBehaviour
 
         else if (actions.Vertical.WasPressed)
         {
+            StartCoroutine(LockInputTimer(0.3f));
             switch (currentMenu)
             {
                 case ListType.Items:
@@ -147,7 +148,7 @@ public class Inventory : MonoBehaviour
     public void CloseInventory()
     {
         EventSystem.current.SetSelectedGameObject(null);
-        LeanTween.scale(HorizontalPanel.gameObject, new Vector3(0, 0, 0), 0.3f).setEase(LeanTweenType.easeOutQuad);
+        LeanTween.scale(HorizontalPanel.gameObject, new Vector3(0, 0, 0), 0.4f).setEase(LeanTweenType.easeOutQuad);
        StartCoroutine( DelayedFunction(EnableMovement, 0.3f));
     }
     public void EnableMovement()
