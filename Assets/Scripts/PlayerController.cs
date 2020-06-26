@@ -6,14 +6,12 @@ using UnityEngine.Animations;
 
 public class PlayerController : MonoBehaviour
 {
-
     //controller related
     private float BaseSpeed = 3;
     [SerializeField] private float CameraSpeed;
     [SerializeField] private Transform Camera;
     private Animator anim;
     private float speed = 3;
-
 
     public bool InControl;
     Rigidbody RB;

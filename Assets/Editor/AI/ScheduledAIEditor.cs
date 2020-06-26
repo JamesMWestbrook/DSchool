@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(ScheduledAI))]
+//[CustomEditor(typeof(ScheduledAI))]
 public class ScheduledAIEditor : Editor
 {
-    public bool Bitch = true;
+    public bool ShowNormal = true;
 
     public bool WeekOne = true;
     public bool WeekTwo = true;
@@ -14,18 +14,28 @@ public class ScheduledAIEditor : Editor
     public override void OnInspectorGUI()
     {
         SerializedProperty daysList = serializedObject.FindProperty("Days");
-
-        WeekOne = EditorGUILayout.Foldout(WeekOne, "Week 1");
-        if (WeekOne)
+        ShowNormal = EditorGUILayout.Toggle("ShowNormal", ShowNormal);
+        //    if(daysList.objectReferenceValue != null)
+        if (ShowNormal)
         {
-            ShowArrayProperty(daysList, 0);
+            Debug.Log("Shownormal");
+            WeekOne = EditorGUILayout.Foldout(WeekOne, "Week 1");
+            if (WeekOne)
+            {
+                ShowArrayProperty(daysList, 0);
+            }
+            WeekTwo = EditorGUILayout.Foldout(WeekTwo, "Week 2");
+            if (WeekTwo)
+            {
+                ShowArrayProperty(daysList, 8);
+            }
+            serializedObject.ApplyModifiedProperties();
         }
-        WeekTwo = EditorGUILayout.Foldout(WeekTwo, "Week 2");
-        if (WeekTwo)
+        else
         {
-            ShowArrayProperty(daysList, 7);
+            base.OnInspectorGUI();
+            return;
         }
-        serializedObject.ApplyModifiedProperties();
     }
 
     public void ShowArrayProperty(SerializedProperty list, int startValue)
@@ -34,11 +44,12 @@ public class ScheduledAIEditor : Editor
         EditorGUI.indentLevel++;
         for (int i = startValue; i < startValue + 7; i++)
         {
+            Debug.Log(i);
             EditorGUILayout.PropertyField(list.GetArrayElementAtIndex(i), new GUIContent("Day " + (i + 1)));
         }
         EditorGUI.indentLevel--;
     }
-    
+
 }
 
 

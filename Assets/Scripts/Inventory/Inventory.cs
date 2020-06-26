@@ -374,7 +374,7 @@ public class Inventory : MonoBehaviour
 
         //ButtonOpacity(_Buttons[MovedInvsButton], 0f);
     }
-    public IEnumerator DelayedFunction(Action bitch, float delay)
+    public  IEnumerator DelayedFunction(Action bitch, float delay)
     {
         yield return new WaitForSeconds(delay);
         bitch();

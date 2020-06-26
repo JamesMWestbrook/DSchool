@@ -509,6 +509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WayPoints:
   - {fileID: 1018151508}
+  - {fileID: 585689918}
 --- !u!4 &200336013
 Transform:
   m_ObjectHideFlags: 0
@@ -521,6 +522,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1018151508}
+  - {fileID: 585689918}
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1140,6 +1142,36 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &585689917
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 585689918}
+  m_Layer: 0
+  m_Name: Waypoint2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &585689918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585689917}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.35, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 200336013}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &645258837
 GameObject:
   m_ObjectHideFlags: 0
@@ -2055,7 +2087,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1018151508}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Waypoint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2068,8 +2100,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1018151507}
-  m_LocalRotation: {x: 0.34843206, y: 0.081398, z: -0.030389298, w: 0.93329847}
-  m_LocalPosition: {x: -16.512913, y: 6.9429445, z: -5.0834}
+  m_LocalRotation: {x: 0.046643615, y: -0.07933099, z: 0.00372836, w: 0.9957495}
+  m_LocalPosition: {x: -43.72632, y: 6.7398624, z: 16.857094}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 200336013}
@@ -4115,12 +4147,22 @@ PrefabInstance:
     - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
         type: 3}
       propertyPath: Days.Array.data[0].periodSlots.Array.size
-      value: 50
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
         type: 3}
       propertyPath: Days.Array.data[0].periodSlots.Array.data[2].args.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
+        type: 3}
+      propertyPath: Days.Array.data[0].periodSlots.Array.data[0].args.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
+        type: 3}
+      propertyPath: Days.Array.data[0].periodSlots.Array.data[1].args.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
         type: 3}
@@ -4141,6 +4183,38 @@ PrefabInstance:
         type: 3}
       propertyPath: Days.Array.data[0].periodSlots.Array.data[2].DelayToNextAction
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
+        type: 3}
+      propertyPath: Days.Array.data[0].periodSlots.Array.data[0].action
+      value: 
+      objectReference: {fileID: 11400000, guid: ed4fa807fd30c0f4cac7486f0b339600,
+        type: 2}
+    - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
+        type: 3}
+      propertyPath: Days.Array.data[0].periodSlots.Array.data[0].args.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
+        type: 3}
+      propertyPath: Days.Array.data[0].periodSlots.Array.data[1].action
+      value: 
+      objectReference: {fileID: 11400000, guid: ed4fa807fd30c0f4cac7486f0b339600,
+        type: 2}
+    - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
+        type: 3}
+      propertyPath: Days.Array.data[0].periodSlots.Array.data[1].args.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
+        type: 3}
+      propertyPath: Days.Array.data[0].periodSlots.Array.data[0].DelayToNextAction
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2775336943090920031, guid: 568e07ac9902a9b43b7255c5638af457,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4431553537415466627, guid: 568e07ac9902a9b43b7255c5638af457,
         type: 3}
