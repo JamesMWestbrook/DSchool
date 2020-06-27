@@ -49,8 +49,19 @@ public class ScheduledAI : MonoBehaviour
     {
         state = ScheduleState.WaitingForNextAction;
         ActionIndex = index;
-        PeriodSlot period = Days[CurDay].periodSlots[index];
-        DecayingDev.Action _AIAction = period.action;
+        PeriodSlot period;
+        DecayingDev.Action _AIAction;
+        if (index < Days[CurDay].periodSlots.Count)
+        {
+            period = Days[CurDay].periodSlots[index];
+            _AIAction = period.action;
+        }
+        else
+        {
+            ActionIndex = 0;
+            period = Days[CurDay].periodSlots[0];
+            _AIAction = period.action;
+        }
 
         if (started)
         {

@@ -4152,7 +4152,7 @@ PrefabInstance:
     - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
         type: 3}
       propertyPath: Days.Array.data[0].periodSlots.Array.data[2].args.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
         type: 3}
@@ -4182,7 +4182,7 @@ PrefabInstance:
     - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
         type: 3}
       propertyPath: Days.Array.data[0].periodSlots.Array.data[2].DelayToNextAction
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
         type: 3}
@@ -4209,7 +4209,18 @@ PrefabInstance:
     - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
         type: 3}
       propertyPath: Days.Array.data[0].periodSlots.Array.data[0].DelayToNextAction
-      value: 10
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
+        type: 3}
+      propertyPath: Days.Array.data[0].periodSlots.Array.data[2].action
+      value: 
+      objectReference: {fileID: 11400000, guid: ed4fa807fd30c0f4cac7486f0b339600,
+        type: 2}
+    - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
+        type: 3}
+      propertyPath: Days.Array.data[0].periodSlots.Array.data[2].args.Array.data[0]
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2775336943090920031, guid: 568e07ac9902a9b43b7255c5638af457,
         type: 3}
@@ -4509,6 +4520,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 185170866}
+    - target: {fileID: 5222130009239450431, guid: 330e50696e7d6e1499290da4d0c3f2a3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5222130009247513021, guid: 330e50696e7d6e1499290da4d0c3f2a3,
         type: 3}
       propertyPath: m_Mesh
@@ -4529,6 +4545,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1202765564}
+    - target: {fileID: 5222130009580150224, guid: 330e50696e7d6e1499290da4d0c3f2a3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5222130009585164976, guid: 330e50696e7d6e1499290da4d0c3f2a3,
         type: 3}
       propertyPath: m_Mesh
