@@ -5,7 +5,7 @@ using UnityEngine;
 public class Talk : Interactable
 {
     public List<DialogueSO> dialogue;
-    private int dialogueIndex;
+    public int dialogueIndex;
     public Talk()
     {
         InteractText = "Talk";
@@ -23,7 +23,7 @@ public class Talk : Interactable
     }
     public override void InteractFunction()
     {
-        DialogueCanvas.dialogueCanvas.Dialogue(dialogue[dialogueIndex]);
+        DialogueCanvas.dialogueCanvas.Dialogue(dialogue[dialogueIndex], this);
     }
 
 

@@ -61,9 +61,12 @@ public class PlayerController : MonoBehaviour
         }
         if (playerActions.Interact.WasPressed)
         {
-            int index = Interaction.InteractIndex;
-            Interaction.Interactables[index].InteractFunction();
-            return;
+            if(Interaction.Interactables.Count > 0)
+            {
+                int index = Interaction.InteractIndex;
+                Interaction.Interactables[index].InteractFunction();
+                return;
+            }
         }
         CrouchMovement();
         Move(playerActions.MovePlayer.Value);
