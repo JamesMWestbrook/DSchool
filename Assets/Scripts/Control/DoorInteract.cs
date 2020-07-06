@@ -26,11 +26,8 @@ public class DoorInteract : Interactable
         Actor actor = other.gameObject.GetComponent<Actor>();
         if (actor && !door.Open)
         {
-            if (actor.AI)
-            {
                 door.side = side;
                 actor.OpenDoor(door);
-            }
         }
     }
 }

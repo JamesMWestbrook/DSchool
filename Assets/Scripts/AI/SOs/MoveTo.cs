@@ -13,7 +13,6 @@ public class MoveTo : DecayingDev.Action
 
     public override void Execute(string[] args, GameObject user)
     {
-        Debug.Log(args[0]);
         int argument = Int32.Parse(args[0]);
         user.GetComponent<NavMeshAgent>().destination = LevelInfo.levelInfo.WayPoints[argument].position;
     }

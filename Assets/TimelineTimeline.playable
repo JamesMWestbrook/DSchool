@@ -192,7 +192,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca8a7598c4b2ab0419f80549eb41f037, type: 3}
   m_Name: SubtitleClip
   m_EditorClassIdentifier: 
-  subtitleText: Biitch
+  subtitleText:
+  - 'You''re a bitch
+
+'
 --- !u!114 &7940300380891050168
 MonoBehaviour:
   m_ObjectHideFlags: 1

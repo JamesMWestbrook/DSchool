@@ -709,6 +709,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4902108063236508368, guid: 568e07ac9902a9b43b7255c5638af457,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2189,8 +2194,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2369,6 +2374,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1181581337
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1181581339}
+  - component: {fileID: 1181581338}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1181581338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181581337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e974edff77b370d409dbd358515a06bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LanguageIndex: 0
+--- !u!4 &1181581339
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181581337}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.133158, y: 19.2, z: 36.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1240181417
 GameObject:
@@ -3926,7 +3975,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2143957367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3939,8 +3988,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c9412ac5f36c44492271af33f2e69d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InMenu: 0
+  playerController: {fileID: 0}
+  InvButton: {fileID: 0}
+  ItemName: {fileID: 0}
+  MenuName: {fileID: 0}
+  HorizontalPanel: {fileID: 0}
+  CenterPoint: {fileID: 0}
+  ButtonsHor: []
+  ButtonsVert: []
+  RightPoint: {fileID: 0}
   Items: []
   CombatItems: []
+  KeyItems: []
+  CurrentButton: 0
+  LockedInput: 0
+  SelectedItem: 0
+  currentMenu: 0
 --- !u!4 &2143957368
 Transform:
   m_ObjectHideFlags: 0

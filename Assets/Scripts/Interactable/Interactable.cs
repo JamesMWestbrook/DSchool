@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable :MonoBehaviour
+public class Interactable : MonoBehaviour
 {
     [HideInInspector] public string InteractText = "Interact With Me";
     public virtual void InteractFunction()
@@ -16,25 +16,24 @@ public class Interactable :MonoBehaviour
     public virtual void OnTriggerEnter(Collider other)
     {
         Actor actor = other.GetComponent<Actor>();
-        if (actor)
+        InteractionManager interactions = other.GetComponent<InteractionManager>();
+        if (!actor && interactions)
         {
-            if (!actor.AI)
-            {
-                actor.Interactables.Add(this);
-                actor.UpdateInteractables();
-            }
+            interactions.Interactables.Add(this);
+            interactions.UpdateInteractables();
         }
+
+        
+
     }
     public virtual void OnTriggerExit(Collider other)
     {
         Actor actor = other.GetComponent<Actor>();
-        if (actor)
+        if (!actor)
         {
-            if (!actor.AI)
-            {
-                actor.Interactables.Remove(this);
-                actor.UpdateInteractables();
-            }
+            InteractionManager interactions = other.GetComponent<InteractionManager>();
+            interactions.Interactables.Remove(this);
+            interactions.UpdateInteractables();
         }
     }
 }

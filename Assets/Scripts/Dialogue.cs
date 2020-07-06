@@ -7,6 +7,12 @@ using UnityEngine.Timeline;
 public class Dialogue 
 {
     public string Speaker;
-    public string dialogue;
+    [TextArea] public string dialogue;
     public TimelineClip timeline;
+}
+
+[System.Serializable]
+public class DialogueSlot
+{
+    
 }

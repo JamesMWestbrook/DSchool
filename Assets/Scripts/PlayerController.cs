@@ -11,12 +11,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float CameraSpeed;
     [SerializeField] private Transform Camera;
     private Animator anim;
-    private float speed = 3;
 
     public bool InControl;
     Rigidbody RB;
     public PlayerActions playerActions;
-
+    private InteractionManager Interaction;
     void Awake()
     {
         playerActions = PlayerActions.CreateWithAllBindings();
@@ -27,6 +26,7 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("Running", false);
         anim.SetBool("Sprinting", false);
 
+        Interaction = GetComponent<InteractionManager>();
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
     }
@@ -58,6 +58,12 @@ public class PlayerController : MonoBehaviour
 
                 Running = true;
             }
+        }
+        if (playerActions.Interact.WasPressed)
+        {
+            int index = Interaction.InteractIndex;
+            Interaction.Interactables[index].InteractFunction();
+            return;
         }
         CrouchMovement();
         Move(playerActions.MovePlayer.Value);

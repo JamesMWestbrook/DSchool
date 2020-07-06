@@ -26,6 +26,7 @@ public class ScheduledAI : MonoBehaviour
 
     private void Start()
     {
+        
         agent = GetComponent<NavMeshAgent>();
         ExecuteAction(0, true);
 

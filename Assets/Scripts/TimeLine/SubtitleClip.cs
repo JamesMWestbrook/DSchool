@@ -5,7 +5,7 @@ using UnityEngine.Playables;
 
 public class SubtitleClip : PlayableAsset
 {
-    public string subtitleText;
+    [TextArea] public List<string> subtitleText;
 
     public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
     {
