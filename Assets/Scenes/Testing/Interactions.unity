@@ -2399,7 +2399,7 @@ GameObject:
   - component: {fileID: 1058157170}
   - component: {fileID: 1058157173}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: InteractCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2495,6 +2495,8 @@ MonoBehaviour:
   InteractText: Interact With Me
   dialogue:
   - {fileID: 11400000, guid: b87276c0456fe5b4ea87f10f16b1d3ac, type: 2}
+  - {fileID: 11400000, guid: 302269f510babe744a906133cf69e6c7, type: 2}
+  dialogueIndex: 0
 --- !u!43 &1110458433
 Mesh:
   m_ObjectHideFlags: 0
