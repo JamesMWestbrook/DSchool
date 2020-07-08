@@ -14,6 +14,7 @@ public class Talk : Interactable
     // Start is called before the first frame update
     void Start()
     {
+        Bitch();
     }
 
     // Update is called once per frame

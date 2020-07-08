@@ -19,7 +19,11 @@ public class DoorInteract : Interactable
     {
         base.InteractFunction();
     }
-    
+    public void Start()
+    {
+        Bitch();
+    }
+
     override public void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);

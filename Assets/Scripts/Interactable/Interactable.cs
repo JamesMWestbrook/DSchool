@@ -1,17 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    [HideInInspector] public string InteractText = "Interact With Me";
+    [NonSerialized] public string InteractText = "Interact With Me";
     public virtual void InteractFunction()
     {
 
     }
     public virtual void Bitch()
     {
-        Debug.Log("bitch");
+        Debug.Log(InteractText);
     }
     public virtual void OnTriggerEnter(Collider other)
     {
