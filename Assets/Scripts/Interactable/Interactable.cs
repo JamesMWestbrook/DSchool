@@ -12,7 +12,6 @@ public class Interactable : MonoBehaviour
     }
     public virtual void Bitch()
     {
-        Debug.Log(InteractText);
     }
     public virtual void OnTriggerEnter(Collider other)
     {

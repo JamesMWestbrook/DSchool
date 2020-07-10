@@ -2492,11 +2492,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d4f006b923b65f46ac568187bae62aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-  - {fileID: 11400000, guid: b87276c0456fe5b4ea87f10f16b1d3ac, type: 2}
-  - {fileID: 11400000, guid: 302269f510babe744a906133cf69e6c7, type: 2}
+  TalkSO: {fileID: 11400000, guid: 1dec2b3c64d6aec4793c6594b3423e25, type: 2}
   dialogueIndex: 0
-  Loop: 1
 --- !u!43 &1110458433
 Mesh:
   m_ObjectHideFlags: 0
@@ -3645,8 +3642,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
         type: 3}
+      propertyPath: Days.Array.data[0].periodSlots.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
+        type: 3}
+      propertyPath: Days.Array.data[0].periodSlots.Array.data[0].args.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
+        type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
+        type: 3}
+      propertyPath: Days.Array.data[0].periodSlots.Array.data[0].action
+      value: 
+      objectReference: {fileID: 11400000, guid: ed4fa807fd30c0f4cac7486f0b339600,
+        type: 2}
+    - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
+        type: 3}
+      propertyPath: Days.Array.data[0].periodSlots.Array.data[0].args.Array.data[0]
+      value: 324
+      objectReference: {fileID: 0}
+    - target: {fileID: 2508068192258360749, guid: 568e07ac9902a9b43b7255c5638af457,
+        type: 3}
+      propertyPath: Days.Array.data[0].periodSlots.Array.data[0].args.Array.data[1]
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 4431553539198437949, guid: 568e07ac9902a9b43b7255c5638af457,
         type: 3}

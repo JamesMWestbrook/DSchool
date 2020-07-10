@@ -87,9 +87,9 @@ public class DialogueCanvas : MonoBehaviour
     {
         dialogueIndex = 0;
         int index = currentTalk.dialogueIndex + 1;
-        if(index >= currentTalk.dialogue.Count)
+        if(index >= currentTalk.TalkSO.dialogue.Count)
         {
-            if (currentTalk.Loop)
+            if (currentTalk.TalkSO.Loop)
             {
                 currentTalk.dialogueIndex = 0;
             }
