@@ -6,6 +6,7 @@ public class Talk : Interactable
 {
     public List<DialogueSO> dialogue;
     public int dialogueIndex;
+    public bool Loop;
     public Talk()
     {
         InteractText = "Talk";

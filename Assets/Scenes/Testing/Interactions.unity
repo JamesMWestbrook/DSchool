@@ -2496,6 +2496,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b87276c0456fe5b4ea87f10f16b1d3ac, type: 2}
   - {fileID: 11400000, guid: 302269f510babe744a906133cf69e6c7, type: 2}
   dialogueIndex: 0
+  Loop: 1
 --- !u!43 &1110458433
 Mesh:
   m_ObjectHideFlags: 0

@@ -23,9 +23,6 @@ public class Interactable : MonoBehaviour
             interactions.Interactables.Add(this);
             interactions.UpdateInteractables();
         }
-
-        
-
     }
     public virtual void OnTriggerExit(Collider other)
     {
