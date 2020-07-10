@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3042868c916c834cb74c6a4e104dab2, type: 3}
-  m_Name: TestDialogue
-  m_EditorClassIdentifier: 
+  m_Script: {fileID: 0}
+  m_Name: DialogueObject2
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueObject
   Script:
-  - Speaker: Bitch
-    dialogue: No
+  - Speaker: 2-1
+    dialogue: 
     timeline:
       m_Version: 1
       m_Start: 0
@@ -30,15 +30,15 @@ MonoBehaviour:
       m_MixInCurve:
         serializedVersion: 2
         m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
       m_MixOutCurve:
         serializedVersion: 2
         m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
       m_BlendInCurveMode: 0
       m_BlendOutCurveMode: 0
       m_ExposedParameterNames: []
@@ -49,8 +49,8 @@ MonoBehaviour:
       m_PostExtrapolationTime: 0
       m_PreExtrapolationTime: 0
       m_DisplayName: 
-  - Speaker: Bitch
-    dialogue: "how about no\t\t"
+  - Speaker: 2-2
+    dialogue: 
     timeline:
       m_Version: 1
       m_Start: 0
@@ -66,15 +66,15 @@ MonoBehaviour:
       m_MixInCurve:
         serializedVersion: 2
         m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
       m_MixOutCurve:
         serializedVersion: 2
         m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
       m_BlendInCurveMode: 0
       m_BlendOutCurveMode: 0
       m_ExposedParameterNames: []
@@ -85,8 +85,8 @@ MonoBehaviour:
       m_PostExtrapolationTime: 0
       m_PreExtrapolationTime: 0
       m_DisplayName: 
-  - Speaker: Bitch
-    dialogue: Maybe
+  - Speaker: 2-3
+    dialogue: 
     timeline:
       m_Version: 1
       m_Start: 0
@@ -102,15 +102,15 @@ MonoBehaviour:
       m_MixInCurve:
         serializedVersion: 2
         m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
       m_MixOutCurve:
         serializedVersion: 2
         m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
       m_BlendInCurveMode: 0
       m_BlendOutCurveMode: 0
       m_ExposedParameterNames: []

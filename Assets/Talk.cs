@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Timeline;
 public class Talk : Interactable
 {
-    public TalkClassSO TalkSO;
+    public DialogueGroup TalkSO;
     public int dialogueIndex;
     public Talk()
     {
@@ -21,10 +21,25 @@ public class Talk : Interactable
     }
 }
 
-[CreateAssetMenu(fileName = "GroupSO", menuName = "DD/DialogueContainer")]
-public class TalkClassSO : ScriptableObject
+[CreateAssetMenu(fileName = "DialogueGroup", menuName = "DD/DialogueGroup")]
+public class DialogueGroup : ScriptableObject
 {
-    public List<DialogueSO> dialogue;
+    public List<DialogueObject> dialogue;
     public bool Loop;
 
+}
+
+
+[CreateAssetMenu(fileName = "DialogueObject", menuName = "DD/DialogueObject")]
+public class DialogueObject : ScriptableObject
+{
+    public List<Dialogue> Script;
+}
+
+[System.Serializable]
+public class Dialogue
+{
+    public string Speaker;
+    [TextArea] public string dialogue;
+    public TimelineClip timeline;
 }

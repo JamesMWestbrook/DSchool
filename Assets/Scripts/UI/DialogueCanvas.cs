@@ -37,9 +37,9 @@ public class DialogueCanvas : MonoBehaviour
             NextDialogue();
         }
     }
-    public DialogueSO currentDialogue;
+    public DialogueObject currentDialogue;
     private int dialogueIndex;
-    public void Dialogue(DialogueSO dialogue, Talk _talk)
+    public void Dialogue(DialogueObject dialogue, Talk _talk)
     {
         currentTalk = _talk;
         InDialogue = true;

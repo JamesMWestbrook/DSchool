@@ -686,6 +686,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Inventory
       objectReference: {fileID: 0}
+    - target: {fileID: 2384238750428227190, guid: 7b9b3635fcb5c99479f117a6be3e144a,
+        type: 3}
+      propertyPath: m_margin.z
+      value: -279.3386
+      objectReference: {fileID: 0}
     - target: {fileID: 3591467801084811550, guid: 7b9b3635fcb5c99479f117a6be3e144a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2492,7 +2497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d4f006b923b65f46ac568187bae62aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TalkSO: {fileID: 11400000, guid: 1dec2b3c64d6aec4793c6594b3423e25, type: 2}
+  TalkSO: {fileID: 11400000, guid: 9ad1e4d1e3bcb204a889c9f2c48e2727, type: 2}
   dialogueIndex: 0
 --- !u!43 &1110458433
 Mesh:
