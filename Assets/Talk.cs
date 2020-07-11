@@ -20,22 +20,6 @@ public class Talk : Interactable
         DialogueCanvas.dialogueCanvas.Dialogue(TalkSO.dialogue[dialogueIndex], this);
     }
 }
-
-[CreateAssetMenu(fileName = "DialogueGroup", menuName = "DD/DialogueGroup")]
-public class DialogueGroup : ScriptableObject
-{
-    public List<DialogueObject> dialogue;
-    public bool Loop;
-
-}
-
-
-[CreateAssetMenu(fileName = "DialogueObject", menuName = "DD/DialogueObject")]
-public class DialogueObject : ScriptableObject
-{
-    public List<Dialogue> Script;
-}
-
 [System.Serializable]
 public class Dialogue
 {

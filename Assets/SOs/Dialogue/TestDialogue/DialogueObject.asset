@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: DialogueObject1
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueObject
+  m_Script: {fileID: 11500000, guid: 9b2bd8986d4d85c408459fa5f0a1cc39, type: 3}
+  m_Name: DialogueObject
+  m_EditorClassIdentifier: 
   Script:
-  - Speaker: speaker
-    dialogue: dialogue 1
+  - Speaker: 5
+    dialogue: 
     timeline:
       m_Version: 1
       m_Start: 0
@@ -49,8 +49,44 @@ MonoBehaviour:
       m_PostExtrapolationTime: 0
       m_PreExtrapolationTime: 0
       m_DisplayName: 
-  - Speaker: speaker
-    dialogue: dialogue 2
+  - Speaker: 4
+    dialogue: 
+    timeline:
+      m_Version: 1
+      m_Start: 0
+      m_ClipIn: 0
+      m_Asset: {fileID: 0}
+      m_Duration: 0
+      m_TimeScale: 0
+      m_ParentTrack: {fileID: 0}
+      m_EaseInDuration: 0
+      m_EaseOutDuration: 0
+      m_BlendInDuration: 0
+      m_BlendOutDuration: 0
+      m_MixInCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+      m_MixOutCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+      m_BlendInCurveMode: 0
+      m_BlendOutCurveMode: 0
+      m_ExposedParameterNames: []
+      m_AnimationCurves: {fileID: 0}
+      m_Recordable: 0
+      m_PostExtrapolationMode: 0
+      m_PreExtrapolationMode: 0
+      m_PostExtrapolationTime: 0
+      m_PreExtrapolationTime: 0
+      m_DisplayName: 
+  - Speaker: 3
+    dialogue: 
     timeline:
       m_Version: 1
       m_Start: 0

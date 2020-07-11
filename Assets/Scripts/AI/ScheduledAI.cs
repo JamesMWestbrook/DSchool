@@ -21,7 +21,8 @@ public class ScheduledAI : MonoBehaviour
     {
         RunningAction,
         WaitingForNextAction,
-        PausedAction
+        PausedAction,
+        IgnoringSchedule
     }
 
     private void Start()
