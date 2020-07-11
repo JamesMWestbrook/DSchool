@@ -101,6 +101,8 @@ public class DialogueCanvas : MonoBehaviour
         StartCoroutine(DelayInput(true));
         LeanTween.scale(DialoguePanel.gameObject, new Vector3(0, 0, 0), 0.3f).setEase(LeanTweenType.easeOutQuad);
         LeanTween.scale(SpeakerPanel.gameObject, new Vector3(0, 0, 0), 0.3f).setEase(LeanTweenType.easeOutQuad);
+
+        currentTalk.GetComponentInParent<Actor>().ResumeAction();
     }
 
     public IEnumerator DelayInput(bool FinishedDialogue)

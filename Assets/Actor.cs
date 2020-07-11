@@ -46,13 +46,11 @@ public class Actor : MonoBehaviour
             {
                 case ScheduleState.RunningAction:
                     AwaitNextAction();
-
                     break;
                 case ScheduleState.WaitingForNextAction:
 
                     break;
                 case ScheduleState.PausedAction:
-                    
                     break;
                 case ScheduleState.IgnoringSchedule:
 
@@ -90,8 +88,32 @@ public class Actor : MonoBehaviour
         {
             StartCoroutine(DelayedAIAction(_AIAction, period.args.ToArray(), PreviousIndex(schedule.Periods)));
         }
+        Debug.Log(ActionIndex);
+
         //action.Execute(period.args.ToArray(), gameObject);
         CurAction = _AIAction;
+    }
+public  void PauseAction()
+    {
+        if(CurAction is MoveTo)
+        {
+            animator.SetBool("Moving", false);
+            agent.isStopped = true;
+        }
+    }
+
+    public void ResumeAction()
+    {
+        if (CurAction is MoveTo)
+        {
+            animator.SetBool("Moving", true);
+            agent.isStopped = false;
+            state = ScheduleState.RunningAction;
+        }
+        if(CurAction is Idle)
+        {
+           
+        }
     }
     void AwaitNextAction()
     {
@@ -101,6 +123,13 @@ public class Actor : MonoBehaviour
             {
                 ExecuteAction(ActionIndex + 1);
                 animator.SetBool("Moving", false);
+            }
+        }
+        if(CurAction is Idle)
+        {
+            if (!Idling)
+            {
+                ExecuteAction(ActionIndex + 1);
             }
         }
     }
@@ -115,7 +144,21 @@ public class Actor : MonoBehaviour
             return period[ActionIndex - 1].DelayToNextAction;
         }
     }
+    public bool IsBusy;
+    public bool Idling;
+    public void StartIdle(float time)
+    {
+        Idling = true;
+        StartCoroutine(Idle(time));
+        state = ScheduleState.RunningAction;
+    }
+    public IEnumerator Idle(float time)
+    {
+        if (IsBusy) yield return null;
+        yield return new WaitForSeconds(time);
+        Idling = false;
 
+    }
     public IEnumerator DelayedAIAction(DecayingDev.Action _AIAction, string[] args, float delayTime)
     {
 

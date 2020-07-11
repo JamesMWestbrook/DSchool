@@ -18,6 +18,7 @@ public class Talk : Interactable
     public override void InteractFunction()
     {
         DialogueCanvas.dialogueCanvas.Dialogue(TalkSO.dialogue[dialogueIndex], this);
+        GetComponentInParent<Actor>().PauseAction();
     }
 }
 [System.Serializable]

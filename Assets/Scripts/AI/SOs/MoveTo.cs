@@ -16,6 +16,4 @@ public class MoveTo : DecayingDev.Action
         int argument = Int32.Parse(args[0]);
         user.GetComponent<NavMeshAgent>().destination = LevelInfo.levelInfo.WayPoints[argument].position;
     }
-
-
 }
