@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class Actor : MonoBehaviour
 {
+    public int ActorID;
     private Animator animator;
     private NavMeshAgent agent;
     private DecayingDev.Action CurAction;
@@ -30,10 +31,12 @@ public class Actor : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
 
 
+    }
+    public void StartSchedule()
+    {
         ExecuteAction(0, true);
 
     }
-
     // Update is called once per frame
     void Update()
     {

@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public int LanguageIndex;
     public PlayerController playerController;
+    public List<GameObject> Actors;
 
     public static GameManager Instance;
     // Start is called before the first frame update

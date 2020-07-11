@@ -10,7 +10,5 @@ namespace DecayingDev
         public abstract int ArgumentCount { get; }
         public abstract void Execute(string[] args, GameObject user);
         public virtual string GetArgumentName(int argIndex) { return $"arg {argIndex}"; }
-
-
     }
 }
