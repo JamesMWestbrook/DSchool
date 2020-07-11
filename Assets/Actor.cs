@@ -8,27 +8,120 @@ public class Actor : MonoBehaviour
 {
     private Animator animator;
     private NavMeshAgent agent;
+    private DecayingDev.Action CurAction;
+    public ScheduleState state;
 
+    private int CurDay = 0;
+    private int ActionIndex = 0;
+    public Schedule schedule;
+
+
+    public enum ScheduleState
+    {
+        RunningAction,
+        WaitingForNextAction,
+        PausedAction,
+        IgnoringSchedule
+    }
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+
+
+        ExecuteAction(0, true);
+
     }
 
     // Update is called once per frame
     void Update()
     {
         {
-            if (agent.remainingDistance < 1)
+            
+            switch (state)
             {
-                animator.SetBool("Moving", false);
-            }
+                case ScheduleState.RunningAction:
+                    AwaitNextAction();
 
+                    break;
+                case ScheduleState.WaitingForNextAction:
+
+                    break;
+                case ScheduleState.PausedAction:
+                    
+                    break;
+                case ScheduleState.IgnoringSchedule:
+
+                    break;
+            }
         }
     }
 
 
+
+    void ExecuteAction(int index, bool started = false)
+    {
+        state = ScheduleState.WaitingForNextAction;
+        ActionIndex = index;
+        PeriodSlot period;
+        DecayingDev.Action _AIAction;
+        if (index < schedule.Periods.Count)
+        {
+            period = schedule.Periods[index];
+            _AIAction = period.action;
+        }
+        else
+        {
+            ActionIndex = 0;
+            period = schedule.Periods[0];
+            _AIAction = period.action;
+        }
+
+        if (started)
+        {
+            StartCoroutine(DelayedAIAction(_AIAction, period.args.ToArray(), 0));
+
+        }
+        else
+        {
+            StartCoroutine(DelayedAIAction(_AIAction, period.args.ToArray(), PreviousIndex(schedule.Periods)));
+        }
+        //action.Execute(period.args.ToArray(), gameObject);
+        CurAction = _AIAction;
+    }
+    void AwaitNextAction()
+    {
+        if (CurAction is MoveTo)
+        {
+            if (agent.remainingDistance < 1)
+            {
+                ExecuteAction(ActionIndex + 1);
+                animator.SetBool("Moving", false);
+            }
+        }
+    }
+    float PreviousIndex(List<PeriodSlot> period)
+    {
+        if (ActionIndex - 1 < 0)
+        {
+            return period[period.Count - 1].DelayToNextAction;
+        }
+        else
+        {
+            return period[ActionIndex - 1].DelayToNextAction;
+        }
+    }
+
+    public IEnumerator DelayedAIAction(DecayingDev.Action _AIAction, string[] args, float delayTime)
+    {
+
+
+        yield return new WaitForSeconds(delayTime);
+
+        _AIAction.Execute(args, gameObject);
+        state = ScheduleState.RunningAction;
+    }
 
     public void OpenDoor(Door door)
     {

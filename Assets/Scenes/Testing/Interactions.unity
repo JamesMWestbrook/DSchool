@@ -3676,6 +3676,12 @@ PrefabInstance:
       propertyPath: Days.Array.data[0].periodSlots.Array.data[0].args.Array.data[1]
       value: 33
       objectReference: {fileID: 0}
+    - target: {fileID: 4431553537415466627, guid: 568e07ac9902a9b43b7255c5638af457,
+        type: 3}
+      propertyPath: schedule
+      value: 
+      objectReference: {fileID: 11400000, guid: 4b328d2b6a54dad42b972e48370e418a,
+        type: 2}
     - target: {fileID: 4431553539198437949, guid: 568e07ac9902a9b43b7255c5638af457,
         type: 3}
       propertyPath: m_Enabled

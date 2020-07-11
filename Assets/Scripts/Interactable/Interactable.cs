@@ -17,7 +17,7 @@ public class Interactable : MonoBehaviour
     {
         Actor actor = other.GetComponent<Actor>();
         InteractionManager interactions = other.GetComponent<InteractionManager>();
-        if (!actor && interactions)
+        if (interactions)
         {
             interactions.Interactables.Add(this);
             interactions.UpdateInteractables();
@@ -25,10 +25,10 @@ public class Interactable : MonoBehaviour
     }
     public virtual void OnTriggerExit(Collider other)
     {
+        InteractionManager interactions = other.GetComponent<InteractionManager>();
         Actor actor = other.GetComponent<Actor>();
-        if (!actor)
+        if (interactions)
         {
-            InteractionManager interactions = other.GetComponent<InteractionManager>();
             interactions.Interactables.Remove(this);
             interactions.UpdateInteractables();
         }
