@@ -129,7 +129,7 @@ public  void PauseAction()
         {
             if (!Idling)
             {
-                ExecuteAction(ActionIndex + 1);
+                
             }
         }
     }
@@ -157,7 +157,7 @@ public  void PauseAction()
         if (IsBusy) yield return null;
         yield return new WaitForSeconds(time);
         Idling = false;
-
+        ExecuteAction(ActionIndex + 1);
     }
     public IEnumerator DelayedAIAction(DecayingDev.Action _AIAction, string[] args, float delayTime)
     {

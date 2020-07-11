@@ -21,7 +21,11 @@ MonoBehaviour:
     DelayToNextAction: 1
     args:
     - 1
+  - action: {fileID: 11400000, guid: 511d86e5f35e3844aa4ebbf00ad3cb09, type: 2}
+    DelayToNextAction: 1
+    args:
+    - 5
   - action: {fileID: 11400000, guid: ed4fa807fd30c0f4cac7486f0b339600, type: 2}
-    DelayToNextAction: 0
+    DelayToNextAction: 1
     args:
     - 0
