@@ -16,6 +16,10 @@ public class DialogueCanvas : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public bool InDialogue;
     // Start is called before the first frame update
+
+    public GameObject CaptionsPanel;
+    public TextMeshProUGUI captionsText;
+
     void Start()
     {
         dialogueCanvas = this;
@@ -120,4 +124,15 @@ public class DialogueCanvas : MonoBehaviour
         }
 
     }
+
+    public void StartCaptions(ConversationAction action, int dialogueIndex)
+    {
+        int actorID = action.Conversations[dialogueIndex].SpeakerGOIndex;
+        GameManager.Instance.Actors[actorID].GetComponent<Actor>().CaptionIndicator.SetActive(true);
+    }
+    //Start Caption
+    
+    //IEnumerator for running next along with showing showable text
+
+
 }

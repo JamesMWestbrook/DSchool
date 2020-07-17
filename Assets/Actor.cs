@@ -15,7 +15,7 @@ public class Actor : MonoBehaviour
     private int CurDay = 0;
     private int ActionIndex = 0;
     public Schedule schedule;
-
+    public GameObject CaptionIndicator;
 
     public enum ScheduleState
     {
@@ -30,7 +30,7 @@ public class Actor : MonoBehaviour
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
-
+        CaptionIndicator.SetActive(false);
     }
     public void StartSchedule()
     {
@@ -88,8 +88,6 @@ public class Actor : MonoBehaviour
         {
             StartCoroutine(DelayedAIAction(_AIAction, period.args.ToArray(), PreviousIndex(schedule.Periods)));
         }
-        Debug.Log(ActionIndex);
-
         //action.Execute(period.args.ToArray(), gameObject);
         CurAction = _AIAction;
     }

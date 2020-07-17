@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4635e4bd22c129d459df90127fb9091f, type: 3}
-  m_Name: TestSchedule
+  m_Name: ScheduleActor1
   m_EditorClassIdentifier: 
   Periods:
-  - action: {fileID: 11400000, guid: 511d86e5f35e3844aa4ebbf00ad3cb09, type: 2}
+  - action: {fileID: 11400000, guid: 67ac0bdacfe9f934390d9c655c4bf33d, type: 2}
     DelayToNextAction: 0
     args:
-    - 5
+    - 0
   - action: {fileID: 11400000, guid: ed4fa807fd30c0f4cac7486f0b339600, type: 2}
     DelayToNextAction: 1
     args:
