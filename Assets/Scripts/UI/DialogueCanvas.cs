@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using DecayingDev;
+using JetBrains.Annotations;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TMPro;
@@ -125,14 +127,43 @@ public class DialogueCanvas : MonoBehaviour
 
     }
 
+    private ConversationAction currentAction;
+    private int conversationIndex;
+    private int currentSpeaker;
     public void StartCaptions(ConversationAction action, int dialogueIndex)
     {
         int actorID = action.Conversations[dialogueIndex].SpeakerGOIndex;
+        currentSpeaker = actorID;
+        conversationIndex = dialogueIndex;
+        currentAction = action;
         GameManager.Instance.Actors[actorID].GetComponent<Actor>().CaptionIndicator.SetActive(true);
+
+        CaptionsPanel.SetActive(true);
+        AIDialogue dialogue = action.Conversations[dialogueIndex];
+        captionsText.text = dialogue.SpeakerText + ": " + dialogue.Dialogue;
+        captionsText.maxVisibleCharacters = 0;
+
+        LeanTween.value(captionsText.gameObject, (float x) => captionsText.maxVisibleCharacters = (int)x, 0, captionsText.text.Length, 1);
+        StartCoroutine(DelayedFunction(RunNextCaption, dialogue.Delay));
+        StartCoroutine(DelayedFunction(HideIndicator, dialogue.Delay - 0.1f));
+        GetComponentInChildren<CaptionsText>().Target = GameManager.Instance.Actors[actorID].transform;
+    }
+    private IEnumerator DelayedFunction(System.Action action, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        action();
+    }
+    private void RunNextCaption()
+    {
+        StartCaptions(currentAction, conversationIndex + 1);
+    }
+    private void HideIndicator()
+    {
+        GameManager.Instance.Actors[currentSpeaker].GetComponent<Actor>().CaptionIndicator.SetActive(false);
     }
     //Start Caption
     
     //IEnumerator for running next along with showing showable text
-
+    
 
 }
