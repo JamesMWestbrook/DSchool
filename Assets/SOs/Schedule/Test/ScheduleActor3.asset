@@ -17,6 +17,7 @@ MonoBehaviour:
     DelayToNextAction: 0
     args:
     - -1
+    - 2
   - action: {fileID: 11400000, guid: 511d86e5f35e3844aa4ebbf00ad3cb09, type: 2}
     DelayToNextAction: 0
     args:
