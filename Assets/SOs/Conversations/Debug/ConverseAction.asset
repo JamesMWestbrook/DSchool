@@ -15,9 +15,9 @@ MonoBehaviour:
   InvolvedActors: 0000000001000000
   Conversations:
   - SpeakerGOIndex: 0
-    SpeakerText: 0
-    Dialogue: Dialogue for speaker one
-    Delay: 3
+    SpeakerText: 
+    Dialogue: Hello there.
+    Delay: 10
   - SpeakerGOIndex: 1
     SpeakerText: 1
     Dialogue: Dialogue for speaker two

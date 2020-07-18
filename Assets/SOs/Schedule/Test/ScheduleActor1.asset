@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: ScheduleActor1
   m_EditorClassIdentifier: 
   Periods:
+  - action: {fileID: 11400000, guid: 9ae72edecdfb989498ac08a4dd86605e, type: 2}
+    DelayToNextAction: 0
+    args:
+    - -1
   - action: {fileID: 11400000, guid: 67ac0bdacfe9f934390d9c655c4bf33d, type: 2}
     DelayToNextAction: 0
     args:
