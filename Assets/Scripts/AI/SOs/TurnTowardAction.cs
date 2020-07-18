@@ -12,7 +12,6 @@ public class TurnTowardAction : DecayingDev.Action
     public override void Execute(string[] args, GameObject user)
     {
         int index = Int32.Parse(args[0]);
-        Debug.Log("arg length " + args.Length);
         if (args.Length == 2)
         {
             speed = float.Parse(args[1]);
@@ -34,5 +33,4 @@ public class TurnTowardAction : DecayingDev.Action
         Actor actor = user.GetComponent<Actor>();
         actor.ExecuteAction(actor.ActionIndex + 1);
     }
-
 }
