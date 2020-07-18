@@ -9,11 +9,11 @@ public class Actor : MonoBehaviour
     public int ActorID;
     private Animator animator;
     private NavMeshAgent agent;
-    private DecayingDev.Action CurAction;
+    public DecayingDev.Action CurAction;
     public ScheduleState state;
 
     private int CurDay = 0;
-    private int ActionIndex = 0;
+    public int ActionIndex = 0;
     public Schedule schedule;
     public GameObject CaptionIndicator;
 
@@ -41,7 +41,7 @@ public class Actor : MonoBehaviour
     void Update()
     {
         {
-            
+
             switch (state)
             {
                 case ScheduleState.RunningAction:
@@ -61,7 +61,7 @@ public class Actor : MonoBehaviour
 
 
 
-    void ExecuteAction(int index, bool started = false)
+    public void ExecuteAction(int index, bool started = false)
     {
         state = ScheduleState.WaitingForNextAction;
         ActionIndex = index;
@@ -91,9 +91,9 @@ public class Actor : MonoBehaviour
         //action.Execute(period.args.ToArray(), gameObject);
         CurAction = _AIAction;
     }
-public  void PauseAction()
+    public void PauseAction()
     {
-        if(CurAction is MoveTo)
+        if (CurAction is MoveTo)
         {
             animator.SetBool("Moving", false);
             agent.isStopped = true;
@@ -108,9 +108,9 @@ public  void PauseAction()
             agent.isStopped = false;
             state = ScheduleState.RunningAction;
         }
-        if(CurAction is Idle)
+        if (CurAction is Idle)
         {
-           
+
         }
     }
     void AwaitNextAction()
@@ -123,11 +123,11 @@ public  void PauseAction()
                 animator.SetBool("Moving", false);
             }
         }
-        if(CurAction is Idle)
+        if (CurAction is Idle)
         {
             if (!Idling)
             {
-                
+
             }
         }
     }
@@ -169,9 +169,9 @@ public  void PauseAction()
 
     public void OpenDoor(Door door)
     {
-//            agent.enabled = false;
-            agent.isStopped = true;
-            animator.SetBool("Moving", false);
+        //            agent.enabled = false;
+        agent.isStopped = true;
+        animator.SetBool("Moving", false);
         string side = "";
         switch (door.side)
         {

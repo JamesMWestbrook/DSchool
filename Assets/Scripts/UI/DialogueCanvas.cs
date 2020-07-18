@@ -1,5 +1,6 @@
 ﻿using DecayingDev;
 using JetBrains.Annotations;
+using Mono.CSharp;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -50,7 +51,7 @@ public class DialogueCanvas : MonoBehaviour
         currentTalk = _talk;
         InDialogue = true;
         currentDialogue = dialogue;
-        speakerText.text = "Speaker: " +  dialogue.Script[0].Speaker;
+        speakerText.text = "Speaker: " + dialogue.Script[0].Speaker;
         dialogueText.text = dialogue.Script[0].dialogue;
 
         LeanTween.scale(DialoguePanel.gameObject, new Vector3(1, 1, 1), 0.3f).setEase(LeanTweenType.easeOutQuad);
@@ -62,7 +63,7 @@ public class DialogueCanvas : MonoBehaviour
     }
     public void NextDialogue()
     {
-        if(dialogueIndex + 1 >= currentDialogue.Script.Count)
+        if (dialogueIndex + 1 >= currentDialogue.Script.Count)
         {
             EndDialogue();
             InputAllowed = false;
@@ -93,7 +94,7 @@ public class DialogueCanvas : MonoBehaviour
     {
         dialogueIndex = 0;
         int index = currentTalk.dialogueIndex + 1;
-        if(index >= currentTalk.TalkSO.dialogue.Count)
+        if (index >= currentTalk.TalkSO.dialogue.Count)
         {
             if (currentTalk.TalkSO.Loop)
             {
@@ -132,6 +133,27 @@ public class DialogueCanvas : MonoBehaviour
     private int currentSpeaker;
     public void StartCaptions(ConversationAction action, int dialogueIndex)
     {
+        
+        if (dialogueIndex >= action.Conversations.Count)
+        {
+            for (int i = 0; i < action.InvolvedActors.Count; i++)
+            {
+                Actor actor = GameManager.Instance.Actors[action.InvolvedActors[i]].GetComponent<Actor>();
+                if (actor.CurAction is ConversationAction)
+                {
+                    actor.ExecuteAction(actor.ActionIndex + 1);
+                }
+                else
+                {
+                    actor.ResumeAction();
+                }
+            }
+            return;
+        }
+
+
+        AIDialogue dialogue = action.Conversations[dialogueIndex];
+        StartCoroutine(DelayedFunction(HideIndicator, dialogue.Delay - 0.1f));
         int actorID = action.Conversations[dialogueIndex].SpeakerGOIndex;
         currentSpeaker = actorID;
         conversationIndex = dialogueIndex;
@@ -139,14 +161,15 @@ public class DialogueCanvas : MonoBehaviour
         GameManager.Instance.Actors[actorID].GetComponent<Actor>().CaptionIndicator.SetActive(true);
 
         CaptionsPanel.SetActive(true);
-        AIDialogue dialogue = action.Conversations[dialogueIndex];
         captionsText.text = dialogue.SpeakerText + ": " + dialogue.Dialogue;
         captionsText.maxVisibleCharacters = 0;
 
         LeanTween.value(captionsText.gameObject, (float x) => captionsText.maxVisibleCharacters = (int)x, 0, captionsText.text.Length, 1);
         StartCoroutine(DelayedFunction(RunNextCaption, dialogue.Delay));
-        StartCoroutine(DelayedFunction(HideIndicator, dialogue.Delay - 0.1f));
+        
         GetComponentInChildren<CaptionsText>().Target = GameManager.Instance.Actors[actorID].transform;
+
+        currentAction = action;
     }
     private IEnumerator DelayedFunction(System.Action action, float delay)
     {
@@ -155,6 +178,7 @@ public class DialogueCanvas : MonoBehaviour
     }
     private void RunNextCaption()
     {
+
         StartCaptions(currentAction, conversationIndex + 1);
     }
     private void HideIndicator()
@@ -162,8 +186,8 @@ public class DialogueCanvas : MonoBehaviour
         GameManager.Instance.Actors[currentSpeaker].GetComponent<Actor>().CaptionIndicator.SetActive(false);
     }
     //Start Caption
-    
+
     //IEnumerator for running next along with showing showable text
-    
+
 
 }

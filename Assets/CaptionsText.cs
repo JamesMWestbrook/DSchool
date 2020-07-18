@@ -22,7 +22,6 @@ public class CaptionsText : MonoBehaviour
     {
         if (!Target) return;
         float Distance = Vector3.Distance(Player.position, Target.position);
-        Debug.Log(Distance);
         image.enabled = true;
         Text.enabled = true;
         if (Distance < 7f)

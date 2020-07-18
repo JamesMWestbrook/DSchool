@@ -26,15 +26,3 @@ MonoBehaviour:
     SpeakerText: 0
     Dialogue: 'Third Dialogue D:'
     Delay: 8
-  - SpeakerGOIndex: 0
-    SpeakerText: 
-    Dialogue: 
-    Delay: 3
-  - SpeakerGOIndex: 0
-    SpeakerText: 
-    Dialogue: 
-    Delay: 3
-  - SpeakerGOIndex: 0
-    SpeakerText: 
-    Dialogue: 
-    Delay: 3

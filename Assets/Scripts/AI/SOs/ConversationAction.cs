@@ -17,8 +17,9 @@ public class ConversationAction : DecayingDev.Action
             GameObject actor = GameManager.Instance.Actors[InvolvedActors[i]];
             if (actor == user) continue;
            actor.GetComponent<Actor>().PauseAction();
+            
         }
-
+        user.GetComponent<Actor>().state = Actor.ScheduleState.RunningAction;
         DialogueCanvas.dialogueCanvas.StartCaptions(this, 0);
     }
 }
