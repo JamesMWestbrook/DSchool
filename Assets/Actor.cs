@@ -10,6 +10,7 @@ public class Actor : MonoBehaviour
     private Animator animator;
     private NavMeshAgent agent;
     public DecayingDev.Action CurAction;
+    public DecayingDev.Action CurSecondaryAction;
     public ScheduleState state;
 
     private int CurDay = 0;
@@ -22,7 +23,8 @@ public class Actor : MonoBehaviour
         RunningAction,
         WaitingForNextAction,
         PausedAction,
-        IgnoringSchedule
+        IgnoringSchedule,
+        SecondaryAction
     }
     // Start is called before the first frame update
     void Start()
@@ -55,13 +57,23 @@ public class Actor : MonoBehaviour
                 case ScheduleState.IgnoringSchedule:
 
                     break;
+                case ScheduleState.SecondaryAction:
+                    AwaitNextAction();
+                    break;
             }
         }
     }
 
+    public void ExecuteSecondAction(List<string> args )
+    {
+        PauseAction();
+        state = ScheduleState.SecondaryAction;
 
+        CurSecondaryAction.Execute(args.ToArray(), gameObject);
+        CurAction = null;
+    }
 
-    public void ExecuteAction(int index, bool started = false)
+    public void ExecuteAction(int index, bool Secondary = false,bool started = false)
     {
         state = ScheduleState.WaitingForNextAction;
         ActionIndex = index;
@@ -115,11 +127,23 @@ public class Actor : MonoBehaviour
     }
     void AwaitNextAction()
     {
-        if (CurAction is MoveTo)
+        if (CurAction is MoveTo || CurSecondaryAction is MoveTo)
         {
             if (agent.remainingDistance < 1)
             {
-                ExecuteAction(ActionIndex + 1);
+
+                if(CurSecondaryAction)
+                {
+                    CurAction = schedule.Periods[ActionIndex].action;
+                    CurSecondaryAction = null;
+                   ExecuteAction(ActionIndex);
+
+                }
+                else
+                {
+                    ExecuteAction(ActionIndex + 1);
+
+                }
                 animator.SetBool("Moving", false);
             }
         }
@@ -129,6 +153,10 @@ public class Actor : MonoBehaviour
             {
 
             }
+        }
+       if(CurAction is ForceAIAction)
+        {
+            ExecuteAction(ActionIndex + 1);
         }
     }
     float PreviousIndex(List<PeriodSlot> period)
